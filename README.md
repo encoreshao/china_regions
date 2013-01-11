@@ -1,6 +1,6 @@
 # ChinaRegions
 
-中国省份，城市，地区［地级市］. 紧支持 Ruby on Rails 而写.
+中国省份，城市，地区［地级市］. 紧支持 Ruby on Rails 程序.
        
 
 ## How to use it
@@ -15,7 +15,7 @@ bundle install
 
     rails g china_regions:install
    
-   It will:
+   数据迁移:
    * 执行 `rake db:migrate` 添加三张表(provinces, cities, districts).
    * 执行 `rake china_regions:import` 导入数据.
 
