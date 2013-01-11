@@ -2,7 +2,7 @@
 
 require 'yaml'
 
-namespace :china_region do
+namespace :china_regions do
   desc "Import regions to database from config/cities.yml"
 
   task :import => :environment do

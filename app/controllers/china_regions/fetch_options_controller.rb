@@ -1,4 +1,4 @@
-module ChinaRegion
+module ChinaRegions
   class FetchOptionsController < ::ActionController::Metal
     
     def index

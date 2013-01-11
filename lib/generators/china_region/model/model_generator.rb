@@ -1,4 +1,4 @@
-module ChinaRegion
+module ChinaRegions
   class ModelGenerator < Rails::Generators::NamedBase
     source_root File.expand_path('../../../../../app', __FILE__)
 

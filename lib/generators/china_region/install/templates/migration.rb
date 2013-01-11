@@ -1,4 +1,4 @@
-class CreateChinaRegionTables < ActiveRecord::Migration
+class CreateChinaRegionsTables < ActiveRecord::Migration
   def change
     unless table_exists? 'provinces'
       create_table :provinces do |t|

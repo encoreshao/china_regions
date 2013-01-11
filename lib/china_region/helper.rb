@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-module ChinaRegion
+module ChinaRegions
   module Helper
     
     module FormHelper
@@ -72,7 +72,7 @@ module ChinaRegion
               self = $(event.currentTarget);
               targetDom = $('#' + self.data('region-target'));
               if (targetDom.size() > 0) {
-                $.getJSON('/china_region/fetch_options', {klass: self.data('region-target-kalss'), parent_klass: self.data('region-klass'), parent_id: self.val()}, function(data) {
+                $.getJSON('/china_regions/fetch_options', {klass: self.data('region-target-kalss'), parent_klass: self.data('region-klass'), parent_id: self.val()}, function(data) {
                   $('option[value!=""]', targetDom).remove();
                   $.each(data, function(index, value) {
                     targetDom.append("<option value='" + value.id + "'>" + value.name + "</option>");
@@ -97,5 +97,5 @@ module ChinaRegion
 end
 
 
-ActionView::Base.send :include, ChinaRegion::Helper::FormHelper
-ActionView::Helpers::FormBuilder.send :include, ChinaRegion::Helper::FormBuilder
+ActionView::Base.send :include, ChinaRegions::Helper::FormHelper
+ActionView::Helpers::FormBuilder.send :include, ChinaRegions::Helper::FormBuilder

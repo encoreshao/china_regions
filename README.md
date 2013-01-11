@@ -1,102 +1,45 @@
-# ChinaRegion
+# ChinaRegions
 
-ChinaRegion Provide The Regions Of China. Support Language Ruby on Rails.
+中国省份，城市，地区［地级市］. 紧支持 Ruby on Rails 而写.
        
 
-## How to use it [Usage]
+## How to use it
 
-Put 'gem china_region' to your Gemfile:
+添加一下代码到你的 Gemfile:
 
-gem 'china_region', :git => 'git://github.com/encoreshao/china_region.git'. 
+gem 'china_regions', :git => 'git://github.com/encoreshao/china_regions.git'. 
 
-Run bundler command to install the gem:
+bundle install
 
-    bundle install
+最后执行:
 
-After you install the gem, you need run the generator:
-
-    rails g china_region:install
+    rails g china_regions:install
    
    It will:
-   * Generate `db/migrate/<timestamp>create_china_region_tables.rb` migrate file to your app, `provinces`, `cities`, `districts` table is used for store the regions.
-   * Copy cities.yml to config/ directory.
-   * Run `rake db:migrate`.
-   * Run `rake china_region:import`.
+   * 执行 `rake db:migrate` 添加三张表(provinces, cities, districts).
+   * 执行 `rake china_regions:import` 导入数据.
 
    Now you have there ActiveRecord modules: `Province`, `City`, `District`.
    
    Run with `rails g` for get generator list.
 
-If you want to customize the region modules you can run the generator:
+添加三个model到你应用中:
 
-    rails g china_region:model
+    rails g china_regions:model
 
-   This will create:
+   查看 app/models:
    
     create  app/models/province.rb
     create  app/models/city.rb
     create  app/models/district.rb
-
-   So you can do what you want to do in this files.
    
-
-#### Model
-
-    a = Province.all.sample
-    a.name
-    a.cities.map(&:name)
-    
-    a.districts.map(&:name)
-    
-    c = City.last
-    c.name
-    c.zip_code
-    c.name_en
-    c.name_abbr
-    c.districts.map(&:name)
-    c.siblings.map(&:name)
-    
-#### View
-
-    <%= form_for(@post) do |f| %>
-      <div class="field">
-        <%= f.label :province, '选择地区：' %><br />
-        
-        # FormBuilder
-        # <%= f.region_select :city %>
-        # <%= f.region_select [:province, :city, :district] %>
-        # <%= f.region_select [:province, :city] %>
-        # <%= f.region_select [:city, :district] %>
-        # <%= f.region_select [:province, :district] %>
-        
-        # FormHelper
-        # <%= region_select :post, :province %>
-        # <%= region_select :post, [:province, :city, :district] %>
-        # ...
-        
-      </div>
-    <% end %>
-
-##### prompt
-  
-You need define `province_select_prompt`, `city_select_prompt`, `district_select_prompt` helpers for each select prompt.
-If you have not define these helpers, it will use the default one like:
-    
-    def region_prompt(region_klass)
-      human_name = region_klass.model_name.human
-      "请选择#{human_name}"
-    end
 
 ## Contributing
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Thank you for XuHao
 
 
 ## License
 
-ChinaRegion is released under the MIT license.
+ChinaRegions is released under the MIT license.
 

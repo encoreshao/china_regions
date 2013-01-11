@@ -1,10 +1,10 @@
-module ChinaRegion
+module ChinaRegions
   class InstallGenerator < Rails::Generators::Base
     include Rails::Generators::Migration
     source_root File.expand_path('../templates', __FILE__)
 
     def copy_migration_file
-      migration_template "migration.rb", "db/migrate/create_china_region_tables.rb"
+      migration_template "migration.rb", "db/migrate/create_china_regions_tables.rb"
     end
     
     def copy_cities_file
@@ -16,7 +16,7 @@ module ChinaRegion
     end
     
     def import_cities_to_database
-      rake('china_region:import')
+      rake('china_regions:import')
     end
 
     def self.next_migration_number(dirname)

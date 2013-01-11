@@ -1,5 +1,5 @@
 require "rails"
 
-module ChinaRegion
+module ChinaRegions
   class Engine < Rails::Engine;end
 end
