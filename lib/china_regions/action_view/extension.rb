@@ -30,7 +30,7 @@ module ChinaRegions
           else
             if klass = methods.to_s.classify.safe_constantize
               options[:prompt] = region_prompt(klass)
-              output << select(object, methods, klass.all.collect {|p| [ p.name, p.id ] }, options = options, html_options = html_options)
+              output << select(object, methods, klass.scoped.collect {|p| [ p.name, p.id ] }, options = options, html_options = html_options)
             else
               raise "Method '#{method}' is not a vaild attribute of #{object}"
             end
@@ -61,9 +61,8 @@ module ChinaRegions
           end
         end
           
-        def region_prompt(region_klass)
-          human_name = region_klass.model_name.human
-          "请选择#{human_name}"
+        def region_prompt(klass)
+          t('views.select', model: klass.model_name.human)
         end
         
         def js_output

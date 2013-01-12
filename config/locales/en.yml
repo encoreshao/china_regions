@@ -1,4 +1,6 @@
 en:
+  views:
+    select: Choose A %{model}
   activerecord:
     models:
       province: Province
@@ -11,7 +13,7 @@ en:
         name_en: English Name
         name_abbr: Short Name
       city:
-        name: Name
+        name: Nam
         province_id: Province
         province: Province
         name_en: English Name
