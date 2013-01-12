@@ -1,13 +1,15 @@
+# encoding: utf-8
+
 module ChinaRegions
   class InstallGenerator < Rails::Generators::Base
     include Rails::Generators::Migration
     source_root File.expand_path('../templates', __FILE__)
 
-    def copy_migration_file
+    def capy_migration_file
       migration_template "migration.rb", "db/migrate/create_china_regions_tables.rb"
     end
     
-    def copy_cities_file
+    def capy_cities_file
       copy_file 'cities.yml', 'config/cities.yml'
     end
     

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class CreateChinaRegionsTables < ActiveRecord::Migration
   def change
     unless table_exists? 'provinces'
