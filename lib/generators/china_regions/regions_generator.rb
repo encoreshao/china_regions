@@ -1,8 +1,8 @@
 # encoding: utf-8
 
 module ChinaRegions
-  class ResgionsGenerator < Rails::Generators::NamedBase
-    source_root File.expand_path('../../../../../app', __FILE__)
+  class RegionsGenerator < Rails::Generators::NamedBase
+    source_root File.expand_path('../../../../app', __FILE__)
 
     def copy_models_file
       copy_file "models/province.rb", "app/models/province.rb"

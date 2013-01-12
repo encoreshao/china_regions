@@ -1,0 +1,26 @@
+en:
+  activerecord:
+    models:
+      province: Province
+      city: City
+      district: District
+
+    attributes:
+      province:
+        name: Name
+        name_en: English Name
+        name_abbr: Short Name
+      city:
+        name: Name
+        province_id: Province
+        province: Province
+        name_en: English Name
+        name_abbr: Short Name
+        zip_code: Zip
+        level: Level
+      district:
+        name: Name
+        city_id: City
+        city: City
+        name_en: English Name
+        name_abbr: Short Name

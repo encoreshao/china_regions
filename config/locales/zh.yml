@@ -1,0 +1,26 @@
+zh:
+  activerecord:
+    models:
+      province: 省份
+      city: 城市
+      district: 区县
+
+    attributes:
+      province:
+        name: 名称
+        name_en: 拼音
+        name_abbr: 简称
+      city:
+        name: 名称
+        province_id: 省份
+        province: 省份
+        name_en: 拼音
+        name_abbr: 简称
+        zip_code: 邮编
+        level: 等级
+      district:
+        name: 名称
+        city_id: 城市
+        city: 城市
+        name_en: 拼音
+        name_abbr: 简称

@@ -5,14 +5,24 @@ module ChinaRegions
     include Rails::Generators::Migration
     source_root File.expand_path('../templates', __FILE__)
 
-    def capy_migration_file
+    def copy_migration
+      system("rm db/migrate/*_china_regions_tables.rb")
       migration_template "migration.rb", "db/migrate/create_china_regions_tables.rb"
     end
     
-    def capy_cities_file
-      copy_file 'cities.yml', 'config/cities.yml'
+    def copy_cities
+      copy_file('cities.yml', 'config/cities.yml') unless File::exists?("config/cities.yml")
     end
     
+    def copy_locales
+      unless File::exists?("config/locales/regions.en.yml")
+        copy_file "../../../../config/locales/en.yml", "config/locales/regions.en.yml"
+      end
+      unless File::exists?("config/locales/regions.zh.yml")
+        copy_file "../../../../config/locales/zh.yml", "config/locales/regions.zh.yml"
+      end
+    end
+
     def execute_migrate
       rake("db:migrate")
     end
