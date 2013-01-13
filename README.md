@@ -38,6 +38,27 @@ bundle install
     create  app/models/province.rb
     create  app/models/city.rb
     create  app/models/district.rb
+
+## How to view 
+
+范例:
+
+= form_for @article do |f|
+
+  = f.region_select [:province, :city, :district]
+
+  # form_tag
+  = region_select :article, :province_id
+  = region_select :article, :city_id
+  = region_select :article, :district_id
+
+  OR
+
+  = region_select :article, :province
+  = region_select :article, :city
+  = region_select :article, :district
+  
+  = f.submit class: 'btn'
    
 
 ## Contributing

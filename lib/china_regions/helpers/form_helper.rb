@@ -26,10 +26,18 @@ module ChinaRegions
             end
           end
         else
-          _methods = methods
+          
+          _methods = unless methods.to_s.include?('_id')
+            (methods.to_s + ('_id')).to_sym 
+          else
+            _methods = methods
+            methods = methods.to_s.gsub(/(_id)$/, '')
+            _methods
+          end
+
           if region_klass = methods.to_s.classify.safe_constantize
             options[:prompt] = region_prompt(region_klass)
-            _methods = (methods.to_s + ('_id')).to_sym unless methods.to_s.include?('_id')
+            
             output << select(object, _methods, region_klass.scoped.collect {|p| [ p.name, p.id ] }, options = options, html_options = html_options)
           else
             raise "Method '#{method}' is not a vaild attribute of #{object}"
