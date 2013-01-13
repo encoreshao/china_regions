@@ -43,22 +43,22 @@ bundle install
 
 范例:
 
-= form_for @article do |f|
+    = form_for @article do |f|
 
-  = f.region_select [:province, :city, :district]
+      = f.region_select [:province, :city, :district]
 
-  # form_tag
-  = region_select :article, :province_id
-  = region_select :article, :city_id
-  = region_select :article, :district_id
+      # form_tag
+      = region_select :article, :province_id
+      = region_select :article, :city_id
+      = region_select :article, :district_id
 
-  OR
+      OR
 
-  = region_select :article, :province
-  = region_select :article, :city
-  = region_select :article, :district
-  
-  = f.submit class: 'btn'
+      = region_select :article, :province
+      = region_select :article, :city
+      = region_select :article, :district
+      
+      = f.submit class: 'btn'
    
 
 ## Contributing

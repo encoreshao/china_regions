@@ -26,7 +26,7 @@ module ChinaRegions
             end
           end
         else
-          
+
           _methods = unless methods.to_s.include?('_id')
             (methods.to_s + ('_id')).to_sym 
           else

@@ -1,5 +1,5 @@
 en:
-  views:
+  helpers:
     select: Choose A %{model}
   activerecord:
     models:
