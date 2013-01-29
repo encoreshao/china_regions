@@ -24,20 +24,22 @@ namespace :china_regions do
         name_abbr:  province_hash['name_abbr']
       })
       province_hash['cities'].each do |city_name, city_hash|
-        city = province.cities.create({ 
-          name:       city_name, 
-          name_en:    city_hash['name_en'], 
-          name_abbr:  city_hash['name_abbr'], 
-          zip_code:   city_hash['zip_code'],
-          level:      city_hash['level'] || 4
+        city = City.create({ 
+          province_id:  province.id,
+          name:         city_name, 
+          name_en:      city_hash['name_en'], 
+          name_abbr:    city_hash['name_abbr'], 
+          zip_code:     city_hash['zip_code'],
+          level:        city_hash['level'] || 4
         })
         districts_hash = city_hash['districts']
 
         districts_hash.each do |district_name, district_hash|
-          city.districts.create({ 
-            name: district_name, 
-            name_en: district_hash['name_en'], 
-            name_abbr: district_hash['name_abbr']
+          District.create({ 
+            city_id:    city.id,
+            name:       district_name, 
+            name_en:    district_hash['name_en'], 
+            name_abbr:  district_hash['name_abbr']
           })
         end
       end

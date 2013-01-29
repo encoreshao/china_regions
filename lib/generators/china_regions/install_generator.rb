@@ -24,11 +24,11 @@ module ChinaRegions
     end
 
     def execute_migrate
-      rake("db:migrate")
+      rake("db:migrate --trace")
     end
     
     def import_cities_to_database
-      rake('china_regions:import')
+      rake('china_regions:import --trace')
     end
 
     def self.next_migration_number(dirname)
