@@ -6,7 +6,7 @@ module ChinaRegions
     source_root File.expand_path('../templates', __FILE__)
 
     def copy_migration
-      system("rm db/migrate/*_china_regions_tables.rb")
+      Dir["db/migrate/*_china_regions_tables.rb"].each{ |file| File.delete(file) }
       migration_template "migration.rb", "db/migrate/create_china_regions_tables.rb"
     end
     
