@@ -9,7 +9,7 @@ namespace :china_regions do
     file_path = File.join(Rails.root, 'config', 'cities.yml')
     data = File.open(file_path) { |file| YAML.load(file) }
     remove_china_regins && load_to_db(data)
-    puts "Data import is done."
+    puts "\n China's provinces, city, region data import is end."
   end
   
   def remove_china_regins
@@ -43,6 +43,7 @@ namespace :china_regions do
           })
         end
       end
+      print "."
     end
   end
 end
