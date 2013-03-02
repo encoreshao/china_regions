@@ -62,10 +62,10 @@ module ChinaRegions
       def set_html_options(object, method, html_options, next_region)
         html_options[:data] ? (html_options[:data][:region_klass] = "#{method.to_s}") : (html_options[:data] = { region_klass: "#{method.to_s}" })
         if next_region
-          html_options[:data].merge!(region_target: "#{object}_#{next_region.to_s}_id", region_target_kalss: next_region.to_s)
+          html_options[:data].merge!(region_target: "#{object}_#{next_region.to_s}_id", region_target_klass: next_region.to_s)
         else
           html_options[:data].delete(:region_target)
-          html_options[:data].delete(:region_target_kalss)
+          html_options[:data].delete(:region_target_klass)
         end
       end
         
@@ -81,7 +81,7 @@ module ChinaRegions
               self = $(event.currentTarget);
               targetDom = $('#' + self.data('region-target'));
               if (targetDom.size() > 0) {
-                $.getJSON('/china_regions/fetch_options', {klass: self.data('region-target-kalss'), parent_klass: self.data('region-klass'), parent_id: self.val()}, function(data) {
+                $.getJSON('/china_regions/fetch_options', {klass: self.data('region-target-klass'), parent_klass: self.data('region-klass'), parent_id: self.val()}, function(data) {
                   $('option[value!=""]', targetDom).remove();
                   $.each(data, function(index, value) {
                     targetDom.append("<option value='" + value.id + "'>" + value.name + "</option>");
