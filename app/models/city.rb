@@ -1,8 +1,6 @@
 # encoding: utf-8
 
 class City < ActiveRecord::Base
-  attr_accessor :name, :province_id, :level, :zip_code, :name_en, :name_abbr
-
   belongs_to :province
   has_many :districts, dependent: :destroy
 

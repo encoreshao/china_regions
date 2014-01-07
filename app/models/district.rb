@@ -1,9 +1,6 @@
 # encoding: utf-8
 
 class District < ActiveRecord::Base
-
-  attr_accessor :name, :city_id, :name_en, :name_abbr
-
   belongs_to :city
 
   scope :with_city, ->(city) { where(city_id: city) }
