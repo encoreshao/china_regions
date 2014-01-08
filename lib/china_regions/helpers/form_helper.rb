@@ -88,7 +88,6 @@ module ChinaRegions
                 })
                 // just clear out the second dropdown if it exists, they should start from the beginning
                 secondTargetDom = $('#' + targetDom.data('region-target'));
-                console.log(secondTargetDom)
                 if (secondTargetDom.size() > 0) {
                   $('option[value!=""]', secondTargetDom).remove();
                 }
