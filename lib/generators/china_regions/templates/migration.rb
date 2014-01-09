@@ -9,12 +9,12 @@ class CreateChinaRegionsTables < ActiveRecord::Migration
         t.string :name_abbr
         t.timestamps
       end
-      
+
       add_index :provinces, :name
       add_index :provinces, :name_en
       add_index :provinces, :name_abbr
     end
-    
+
     unless table_exists? 'cities'
       create_table :cities do |t|
         t.string :name
@@ -32,7 +32,7 @@ class CreateChinaRegionsTables < ActiveRecord::Migration
       add_index :cities, :name_en
       add_index :cities, :name_abbr
     end
-    
+
     unless table_exists? 'districts'  
       create_table :districts do |t|
         t.string :name
