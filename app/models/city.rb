@@ -11,7 +11,7 @@ class City < ActiveRecord::Base
   end
 
   def siblings
-    @siblings ||= scoped.with_province(self.province_id)
+    @siblings ||= where(nil).with_province(self.province_id)
   end
 
 end

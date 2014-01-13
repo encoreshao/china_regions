@@ -14,7 +14,7 @@ class District < ActiveRecord::Base
   end
 
   def siblings
-    @siblings ||= scoped.with_city(self.city_id)
+    @siblings ||= where(nil).with_city(self.city_id)
   end
 
 end

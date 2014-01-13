@@ -23,6 +23,12 @@ module ChinaRegions
       end
     end
 
+    def copy_rake_tasks
+      unless File::exists?("lib/tasks/china_regions.rake")
+        copy_file "../../../../lib/tasks/china_regions.rake", "lib/tasks/china_regions.rake"
+      end
+    end
+
     def execute_migrate
       rake("db:migrate")
     end
