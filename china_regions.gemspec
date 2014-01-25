@@ -2,10 +2,10 @@
 require File.expand_path('../lib/china_regions/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Encore Shao"]
-  gem.email         = ["encore.shao@gmail.com"]
+  gem.authors       = ["Encore Shao","Trey Springer"]
+  gem.email         = ["encore.shao@gmail.com","dspringer@enova.com"]
   gem.description   = %q{China regions Ruby on rails interface}
-  gem.summary       = %q{China regions Ruby on rails interface}
+  gem.summary       = %q{Rails 4 version of dropdowns for all provinces, cities, and districts in China.}
   gem.homepage      = "http://github.com/encoreshao"
 
   gem.files         = `git ls-files`.split($\)
@@ -14,6 +14,6 @@ Gem::Specification.new do |gem|
   gem.name          = "china_regions"
   gem.require_paths = ["lib"]
   gem.version       = ChinaRegions::VERSION
-  
+
   gem.add_dependency 'jquery-rails'
 end

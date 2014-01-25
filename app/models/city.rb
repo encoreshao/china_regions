@@ -1,9 +1,6 @@
 # encoding: utf-8
 
 class City < ActiveRecord::Base
-  
-  attr_accessible :name, :province_id, :level, :zip_code, :name_en, :name_abbr
-  
   belongs_to :province
   has_many :districts, dependent: :destroy
 
@@ -14,7 +11,7 @@ class City < ActiveRecord::Base
   end
 
   def siblings
-    @siblings ||= scoped.with_province(self.province_id)
+    @siblings ||= where(nil).with_province(self.province_id)
   end
 
 end

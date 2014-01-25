@@ -9,11 +9,11 @@ module ChinaRegions
       Dir["db/migrate/*_china_regions_tables.rb"].each{ |file| File.delete(file) }
       migration_template "migration.rb", "db/migrate/create_china_regions_tables.rb"
     end
-    
+
     def copy_cities
       copy_file('cities.yml', 'config/cities.yml') unless File::exists?("config/cities.yml")
     end
-    
+
     def copy_locales
       unless File::exists?("config/locales/regions.en.yml")
         copy_file "../../../../config/locales/en.yml", "config/locales/regions.en.yml"
@@ -23,10 +23,16 @@ module ChinaRegions
       end
     end
 
+    def copy_rake_tasks
+      unless File::exists?("lib/tasks/china_regions.rake")
+        copy_file "../../../../lib/tasks/china_regions.rake", "lib/tasks/china_regions.rake"
+      end
+    end
+
     def execute_migrate
       rake("db:migrate")
     end
-    
+
     def import_cities_to_database
       rake('china_regions:import')
     end

@@ -59,6 +59,13 @@ bundle install
       = region_select :article, :district
       
       = f.submit class: 'btn'
+
+添加前缀名:
+
+    = form_for @article do |f|
+
+      = f.region_select [:province, :city, :district], :prefix => "home"
+      = f.region_select [:province, :city, :district], :prefix => "work"
    
 
 ## Contributing
