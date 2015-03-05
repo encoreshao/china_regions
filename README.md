@@ -67,6 +67,15 @@ bundle install
       = f.region_select [:province, :city, :district], :prefix => "home"
       = f.region_select [:province, :city, :district], :prefix => "work"
 
+Preselect Province:
+
+    = form_for @article do |f|
+
+      = f.region_select [:province, :city, :district], province: "chongqing"
+
+      OR
+
+      = f.region_select [:province, :city, :district], province: "重庆市"
 
 ## Contributing
 
