@@ -143,7 +143,7 @@ module ChinaRegions
 
     module FormBuilder
       def region_select(methods, options = {}, html_options = {})
-        @template.region_select(@object_name, methods, options = options, html_options = html_options)
+        @template.region_select(@object_name.to_s, methods, options = options, html_options = html_options)
       end
     end
 
