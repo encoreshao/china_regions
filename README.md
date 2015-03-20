@@ -1,7 +1,7 @@
 # ChinaRegions
 
 中国省份，城市，地区［地级市］. 紧支持 Ruby on Rails 程序. Ruby Version ( > 1.9.x ) Rails Version ( > 3.2.x )
-       
+
 
 ## How to use it
 
@@ -18,7 +18,7 @@ bundle install
 执行:
 
     rails g china_regions:install
-   
+
    随后你可以看到控制台:
    * 创建 migration 文件到db/migrate 目录 db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb
    * 创建 数据源 cities.yml 到 config 目录.  config/cities.yml
@@ -28,18 +28,18 @@ bundle install
 
 
 此时 你可能需要添加三个 models[`Province`, `City`, `District`] 到你应用中:
-    
+
     你可以执行 `rails g` 查看到 generator LIST.
 
     执行 rails g china_regions:regions models
 
    查看 app/models:
-   
+
     create  app/models/province.rb
     create  app/models/city.rb
     create  app/models/district.rb
 
-## How to view 
+## How to view
 
 范例:
 
@@ -57,7 +57,7 @@ bundle install
       = region_select :article, :province
       = region_select :article, :city
       = region_select :article, :district
-      
+
       = f.submit class: 'btn'
 
 添加前缀名:
@@ -66,7 +66,16 @@ bundle install
 
       = f.region_select [:province, :city, :district], :prefix => "home"
       = f.region_select [:province, :city, :district], :prefix => "work"
-   
+
+Preselect Province:
+
+    = form_for @article do |f|
+
+      = f.region_select [:province, :city, :district], province: "chongqing"
+
+      OR
+
+      = f.region_select [:province, :city, :district], province: "重庆市"
 
 ## Contributing
 
