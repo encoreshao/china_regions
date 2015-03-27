@@ -1,7 +1,14 @@
 # ChinaRegions
 
-中国省份，城市，地区［地级市］. 紧支持 Ruby on Rails 程序. Ruby Version ( > 1.9.x ) Rails Version ( > 3.2.x )
+中国省份，城市，地区［地级市］. 紧支持 Ruby on Rails 程序. Ruby Version ( > 1.9.x ) Rails Version ( > 4.x.x )
 
+## How to update
+
+If you are using ChinaRegions version 0.1.x be sure to run:
+
+    rails g china_regions:regions
+
+to have the javascript file copied over into your project.
 
 ## How to use it
 
@@ -31,7 +38,7 @@ bundle install
 
     你可以执行 `rails g` 查看到 generator LIST.
 
-    执行 rails g china_regions:regions models
+    执行 rails g china_regions:regions
 
    查看 app/models:
 
