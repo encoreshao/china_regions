@@ -4,9 +4,8 @@ module ChinaRegions
     module FormHelper
       def region_select(object_name, methods, options = {}, html_options = {})
         output = ''
-        preselected_choices = {}
 
-        set_preselected_choices(preselected_choices, options)
+        preselected_choices = set_preselected_choices(options)
 
         html_options[:class] ?
           (html_options[:class].prepend('region_select ')) :
@@ -18,6 +17,8 @@ module ChinaRegions
           methods.each_with_index do |method, index|
             if region_klass = method.to_s.classify.safe_constantize
               choices = get_choices(region_klass, method, preselected_choices, index)
+              choices = prioritize_choices(options[:priority][method], choices) if options[:priority].try(:[], method)
+
               next_method = methods.at(index + 1)
 
               set_prompt(method, options, region_klass)
@@ -60,29 +61,48 @@ module ChinaRegions
       private
 
       def get_choices(region_klass, method, preselected_choices, index)
-        choices = (index == 0 ? region_klass.where(nil).collect { |p| [ p.name, p.id ] } : [])
+        return preselected_choices[method] if preselected_choices[method]
 
-        choices = preselected_choices[:cities] if preselected_choices[:cities] && method == :city
-        choices = preselected_choices[:districts] if preselected_choices[:districts] && method == :district
-
-        choices
+        if index == 0
+          region_klass.where(nil).collect { |p| [p.name, p.id] }
+        else
+          []
+        end
       end
 
-      def set_preselected_choices(preselected_choices, options)
-        return unless options[:province]
+      def prioritize_choices(priorities, choices)
+        return choices if priorities.empty?
+
+        temp_choices = []
+        priority_choices = []
+        sorting_map = {}
+
+        priorities.each_with_index do |value, i|
+          sorting_map[value.to_sym] = i
+        end
+
+        choices.each do |name, id|
+          if sorting_map[name.to_sym]
+            priority_choices[sorting_map[name.to_sym]] = [name, id]
+          else
+            temp_choices.push([name, id])
+          end
+        end
+        priority_choices.compact + temp_choices
+      end
+
+      def set_preselected_choices(options)
+        return {} unless options[:province]
 
         province_id = get_province_id(options[:province])
         cities = City.where(province_id: province_id)
         districts = District.where(city_id: cities)
 
-        options.delete(:province)
-
-        city_choices = cities.collect { |c| [ c.name, c.id ] }
-        district_choices = districts.collect { |d| [ d.name, d.id ] }
-
-        preselected_choices[:province_id] = province_id
-        preselected_choices[:cities]      = city_choices
-        preselected_choices[:districts]   = district_choices
+        {
+          province_id: province_id,
+          city:        cities.collect { |c| [ c.name, c.id ] },
+          district:    districts.collect { |d| [ d.name, d.id ] }
+        }
       end
 
       def set_prompt(method, options, region_klass)
