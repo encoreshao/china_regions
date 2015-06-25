@@ -84,6 +84,12 @@ Preselect Province:
 
       = f.region_select [:province, :city, :district], province: "重庆市"
 
+Prioritize Choice:
+
+    = form_for @article do |f|
+
+      = f.region_select [:province, :city, :district], priority: { province: ["重庆市"], district: %w(巴南区 北碚区 渝北区) }
+
 ## Contributing
 
 Thank you for XuHao
