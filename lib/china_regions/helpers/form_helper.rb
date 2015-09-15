@@ -57,6 +57,8 @@ module ChinaRegions
         output.html_safe
       end
 
+      private
+
       def get_choices(region_klass, method, preselected_choices, index)
         return preselected_choices[method] if preselected_choices[method]
 
