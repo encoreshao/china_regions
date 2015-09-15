@@ -5,7 +5,7 @@ module ChinaRegions
       def region_select(object_name, methods, options = {}, html_options = {})
         output = ''
 
-        preselected_choices = set_preselected_choices(options)
+        preselected_choices = set_regions_options(options)
 
         html_options[:class] ?
           (html_options[:class].prepend('region_select ')) :
@@ -24,12 +24,11 @@ module ChinaRegions
               set_prompt(method, options, region_klass)
               set_html_options(object_name, method, html_options, next_method, dropdown_prefix)
 
-              if method == :province and preselected_choices[:province_id]
-                options[:selected] = preselected_choices[:province_id]
+              if options[:default] && options[:default][method]
+                options[:selected] = options[:default][method] if options[:default][method]
               end
 
               output << select(object_name, "#{dropdown_prefix}#{method.to_s}_id", choices, options, html_options)
-              options.delete(:selected) unless method == :province
             else
               raise "Method '#{method}' is not a vaild attribute of #{object_name}"
             end
@@ -91,10 +90,12 @@ module ChinaRegions
         priority_choices.compact + temp_choices
       end
 
-      def set_preselected_choices(options)
-        return {} unless options[:province]
+      def set_regions_options(options)
+        return {} unless options[:default] && options[:default][:province]
 
-        province_id = get_province_id(options[:province])
+        #TODO: Add validator to check if the passed province, city or district exists within the models
+
+        province_id = get_province_id(options[:default][:province])
         cities = City.where(province_id: province_id)
         districts = District.where(city_id: cities)
 
@@ -114,6 +115,9 @@ module ChinaRegions
       end
 
       def get_province_id(province)
+        if province.is_a?(Fixnum)
+          return province
+        end
         Province.where('name_en = ? OR name = ?', province.downcase, province).first.id
       end
 
