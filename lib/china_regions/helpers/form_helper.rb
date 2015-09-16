@@ -115,7 +115,7 @@ module ChinaRegions
       end
 
       def get_province_id(province)
-        return province if province =~ /\A[0-9]*\z/
+        return province if province.to_s =~ /\A[0-9]*\z/
         Province.where('name_en = ? OR name = ?', province.downcase, province).first.id
       end
 
