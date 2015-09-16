@@ -45,7 +45,7 @@ module ChinaRegions
           if region_klass = methods.to_s.classify.safe_constantize
             options[:prompt] = region_prompt(region_klass)
 
-            if methods == :province and preselected_choices[:province_id]
+            if methods == :province && preselected_choices[:province_id]
               options[:selected] = preselected_choices[:province_id]
             end
 
@@ -115,9 +115,7 @@ module ChinaRegions
       end
 
       def get_province_id(province)
-        if province.is_a?(Fixnum)
-          return province
-        end
+        return province if province =~ /\A[0-9]*\z/
         Province.where('name_en = ? OR name = ?', province.downcase, province).first.id
       end
 
