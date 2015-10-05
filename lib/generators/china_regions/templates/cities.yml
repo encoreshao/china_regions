@@ -70,7 +70,7 @@
     天津市:
       name_en: tianjin
       name_abbr: tj
-      zip_code: '100000'
+      zip_code: '300000'
       level: 1
       districts:
         和平区:
