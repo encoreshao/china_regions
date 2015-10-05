@@ -10,7 +10,7 @@ gem 'china_regions'
 
 or
 
-gem 'china_regions',    :git => 'git://github.com/encoreshao/china_regions.git'
+gem 'china_regions', github: 'encoreshao/china_regions'
 
 bundle install
 
@@ -18,9 +18,9 @@ bundle install
 
     rails g china_regions:install
 
-   随后你可以看到控制台:
-   * 创建 migration 文件到db/migrate 目录 db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb
-   * 创建 数据源 cities.yml 到 config 目录.  config/cities.yml
+   随后你可以看到控制台发生的变化:
+   * 创建 db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb 文件到db/migrate 目录
+   * 添加 数据源 cities.yml 到 config 目录.  config/cities.yml
    * 创建 regions.en.yml 和 regions.zh.yml 文件到 config/locales 文件下
    * 执行 `rake db:migrate` 添加三张表(provinces, cities, districts).
    * 执行 `rake china_regions:import` 导入数据.

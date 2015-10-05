@@ -7,6 +7,7 @@ module ChinaRegions
 
     def copy_migration
       Dir["db/migrate/*_china_regions_tables.rb"].each{ |file| File.delete(file) }
+
       migration_template "migration.rb", "db/migrate/create_china_regions_tables.rb"
     end
 

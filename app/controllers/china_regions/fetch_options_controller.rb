@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module ChinaRegions
   class FetchOptionsController < ::ActionController::Metal
 
@@ -17,12 +19,13 @@ module ChinaRegions
     end
 
     protected
-      def has_level_column?(klass_name)
-        klass_name.classify.safe_constantize.try(:column_names).to_a.include?('level')
-      end
+    def has_level_column?(klass_name)
+      klass_name.classify.safe_constantize.try(:column_names).to_a.include?('level')
+    end
 
-      def params_valid?(params)
-        params[:klass].present? and params[:parent_klass] =~ /^province|city$/i and params[:parent_id].present?
-      end
+    def params_valid?(params)
+      params[:klass].present? and params[:parent_klass] =~ /^province|city$/i and params[:parent_id].present?
+    end
+
   end
 end
