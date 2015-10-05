@@ -1,16 +1,15 @@
 # encoding: utf-8
-
 module ChinaRegions
   module Helpers
     module FormHelper
-      def region_select(object, methods, options = {}, html_options = {})
+      def region_select(object_name, methods, options = {}, html_options = {})
         output = ''
 
-        html_options[:class] ? 
-          (html_options[:class].prepend('region_select ')) : 
+        html_options[:class] ?
+          (html_options[:class].prepend('region_select ')) :
             (html_options[:class] = 'region_select')
 
-        dropdown_prefix = options[:prefix].to_s + "_" || ""
+        dropdown_prefix = options[:prefix] ? options[:prefix].to_s + "_" : ""
 
         if Array === methods
           methods.each_with_index do |method, index|
@@ -19,17 +18,16 @@ module ChinaRegions
               next_method = methods.at(index + 1)
 
               set_options(method, options, region_klass)
-              set_html_options(object, method, html_options, next_method, dropdown_prefix)
+              set_html_options(object_name, method, html_options, next_method, dropdown_prefix)
 
-              output << select(object, "#{dropdown_prefix}#{method.to_s}_id", choices, options = options, html_options = html_options)
+              output << select(object_name, "#{dropdown_prefix}#{method.to_s}_id", choices, options = options, html_options = html_options)
             else
-              raise "Method '#{method}' is not a vaild attribute of #{object}"
+              raise "Method '#{method}' is not a vaild attribute of #{object_name}"
             end
           end
         else
-
           _methods = unless methods.to_s.include?('_id')
-            (methods.to_s + ('_id')).to_sym 
+            (methods.to_s + ('_id')).to_sym
           else
             _methods = methods
             methods = methods.to_s.gsub(/(_id)$/, '')
@@ -39,16 +37,14 @@ module ChinaRegions
           if region_klass = methods.to_s.classify.safe_constantize
             options[:prompt] = region_prompt(region_klass)
 
-            output << select(object, _methods, region_klass.where(nil).collect {|p| [ p.name, p.id ] }, options = options, html_options = html_options)
+            output << select(object_name, _methods, region_klass.where(nil).collect {|p| [ p.name, p.id ] }, options = options, html_options = html_options)
           else
-            raise "Method '#{method}' is not a vaild attribute of #{object}"
+            raise "Method '#{method}' is not a vaild attribute of #{object_name}"
           end
         end
-
         output << javascript_tag(js_output)
         output.html_safe
       end
-
 
       private
 
@@ -60,10 +56,12 @@ module ChinaRegions
         end
       end
 
-      def set_html_options(object, method, html_options, next_region, prefix)
+      def set_html_options(object_name, method, html_options, next_region, prefix)
         html_options[:data] ? (html_options[:data][:region_klass] = "#{method.to_s}") : (html_options[:data] = { region_klass: "#{method.to_s}" })
         if next_region
-          html_options[:data].merge!(region_target: "#{object}_#{prefix}#{next_region.to_s}_id", region_target_klass: next_region.to_s)
+          object_name = object_name.dup.gsub(/\[/, '_')
+          object_name = object_name.dup.gsub(/\]/, '')
+          html_options[:data].merge!(region_target: "#{object_name}_#{prefix}#{next_region.to_s}_id", region_target_klass: next_region.to_s)
         else
           html_options[:data].delete(:region_target)
           html_options[:data].delete(:region_target_klass)
@@ -98,9 +96,7 @@ module ChinaRegions
           });
         ~
       end
-
     end
-
 
     module FormBuilder
       def region_select(methods, options = {}, html_options = {})
