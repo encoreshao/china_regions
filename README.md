@@ -1,16 +1,17 @@
 # ChinaRegions
 
-中国省份，城市，地区［地级市］. Ruby on Rails 程式代码. ruby version ( > 1.9.x ) and rails version (> 3.0)
+中国省份，城市，地区［地级市］
+Ruby on Rails 程式代码, Ruby ( > 1.9.x ) And Rails (> 3.0)
 
 ## How to use it
 
-添加一下代码到你的 Gemfile:
+添加以下代码到你的 Gemfile:
 
 gem 'china_regions'
 
-or
+OR
 
-gem 'china_regions', github: 'encoreshao/china_regions'
+gem 'china_regions',  github: 'encoreshao/china_regions'
 
 bundle install
 
@@ -19,10 +20,10 @@ bundle install
     rails g china_regions:install
 
    随后你可以看到控制台发生的变化:
-   * 创建 db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb 文件到db/migrate 目录
-   * 添加 数据源 cities.yml 到 config 目录.  config/cities.yml
-   * 创建 regions.en.yml 和 regions.zh.yml 文件到 config/locales 文件下
-   * 执行 `rake db:migrate` 添加三张表(provinces, cities, districts).
+   * 复制 db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb 文件到db/migrate 目录
+   * 复制 数据源 cities.yml 到 config 目录.  config/cities.yml
+   * 复制 regions.en.yml 和 regions.zh.yml 文件到 config/locales 目录
+   * 执行 `rake db:migrate` 创建所需的表 (provinces, cities, districts).
    * 执行 `rake china_regions:import` 导入数据.
 
 
