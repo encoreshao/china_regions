@@ -1,6 +1,8 @@
 *.gem
 .bundle
 .DS_Store
+.ruby-version
+.rvmrc
 Gemfile.lock
 pkg/*
 doc
