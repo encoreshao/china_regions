@@ -1,7 +1,15 @@
 # ChinaRegions
 
 中国省份，城市，地区［地级市］
-Ruby on Rails 程式代码, Ruby ( > 1.9.x ) And Rails (> 3.0)
+Ruby on Rails 程式代码, Ruby ( > 1.9.x ) And Rails (> 4.0)
+
+## How to update
+
+If you are using ChinaRegions version 0.1.x be sure to run:
+
+    rails g china_regions:regions
+
+to have the javascript file copied over into your project.
 
 ## How to use it
 
@@ -31,7 +39,7 @@ bundle install
 
     你可以执行 `rails g` 查看到 generator LIST.
 
-    执行 rails g china_regions:regions models
+    执行 rails g china_regions:regions
 
    查看 app/models:
 
@@ -68,9 +76,27 @@ bundle install
       = f.region_select [:province, :city, :district], :prefix => "work"
 
 
+Preselect Province:
+
+    = form_for @article do |f|
+
+      = f.region_select [:province, :city, :district], province: "chongqing"
+
+      OR
+
+      = f.region_select [:province, :city, :district], province: "重庆市"
+
+Prioritize Choice:
+
+    = form_for @article do |f|
+
+      = f.region_select [:province, :city, :district], priority: { province: ["重庆市"], district: %w(巴南区 北碚区 渝北区) }
+
 ## Contributing
 
-Thank you for XuHao
+We have a list of valued contributors. Check them all at:
+
+https://github.com/encoreshao/china_regions/graphs/contributors
 
 
 ## License
