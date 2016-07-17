@@ -7,6 +7,7 @@ class CreateChinaRegionsTables < ActiveRecord::Migration
         t.string :name
         t.string :name_en
         t.string :name_abbr
+
         t.timestamps
       end
 
@@ -21,6 +22,7 @@ class CreateChinaRegionsTables < ActiveRecord::Migration
         t.string :zip_code
         t.string :name_en
         t.string :name_abbr
+
         t.timestamps
       end
 
@@ -33,6 +35,7 @@ class CreateChinaRegionsTables < ActiveRecord::Migration
         t.integer :city_id
         t.string :name_en
         t.string :name_abbr
+
         t.timestamps
       end
       add_index :districts, :name
