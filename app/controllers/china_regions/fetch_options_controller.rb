@@ -1,31 +1,31 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 module ChinaRegions
   class FetchOptionsController < ::ActionController::Metal
-
     def index
-      if params_valid?(params) and parent_klass = params[:parent_klass].classify.safe_constantize.find(params[:parent_id])
+      if params_valid?(params) && (parent_klass = params[:parent_klass].classify.safe_constantize.find(params[:parent_id]))
         table_name = params[:klass].tableize
         regions = parent_klass.__send__(table_name).select("#{table_name}.id, #{table_name}.name")
-        if has_level_column?(params[:klass])
-          regions = regions.order('level ASC')
+        regions = if level_column?(params[:klass])
+          regions.order('level ASC')
         else
-          regions = regions.order('name ASC')
+          regions.order('name ASC')
         end
-        self.response_body = regions.to_json
       else
-        self.response_body = [].to_json
+        regions = []
       end
+
+      self.response_body = regions.to_json
     end
 
     protected
-    def has_level_column?(klass_name)
+
+    def level_column?(klass_name)
       klass_name.classify.safe_constantize.try(:column_names).to_a.include?('level')
     end
 
     def params_valid?(params)
-      params[:klass].present? and params[:parent_klass] =~ /^province|city$/i and params[:parent_id].present?
+      params[:klass].present? && params[:parent_klass] =~ /^province|city$/i && params[:parent_id].present?
     end
-
   end
 end

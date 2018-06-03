@@ -1,0 +1,88 @@
+# This is the configuration used to check the rubocop source code.
+
+AllCops:
+  DisplayCopNames: true
+  TargetRubyVersion: 2.5.1
+  Exclude:
+    - '**/*.yml'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'doc/**/*'
+    - 'deployment/**/*'
+    - 'bin/**/*'
+    - 'tmp/**/*'
+    - 'lib/china_regions/helpers/form_helper.rb'
+
+Style/StringLiterals:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+Style/RegexpLiteral:
+  Enabled: false
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: false
+
+Style/FormatString:
+  Enabled: false
+
+Lint/AssignmentInCondition:
+  Enabled: false
+
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: false
+
+Style/SingleLineBlockParams:
+  Enabled: false
+
+Style/NumericLiterals:
+  Exclude:
+    - 'spec/**/*'
+
+Style/StringLiteralsInInterpolation:
+  Enabled: false
+
+Layout/CaseIndentation:
+  EnforcedStyle: end
+  IndentOneStep: false
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable
+
+Lint/UselessAssignment:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 56
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/ModuleLength:
+  Max: 156
+
+Metrics/PerceivedComplexity:
+  Max: 15
+
+Metrics/LineLength:
+  Max: 160
+
+Metrics/MethodLength:
+  Max: 24
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Max: 10
+
+Metrics/BlockLength:
+  Max: 100
+
+Security/MarshalLoad:
+  Enabled: false

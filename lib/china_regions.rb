@@ -1,5 +1,7 @@
-require "china_regions/version"
-require 'china_regions/engine' if defined? Rails
-require "china_regions/helpers/form_helper"
+# frozen_string_literal: true
 
-module ChinaRegions;end
+require 'china_regions/version'
+require 'china_regions/engine' if defined? Rails
+require 'china_regions/helpers/form_helper'
+
+module ChinaRegions; end

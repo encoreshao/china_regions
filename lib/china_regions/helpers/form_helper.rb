@@ -1,22 +1,24 @@
-# encoding: utf-8
+
+# frozen_string_literal: true
+
 module ChinaRegions
   module Helpers
     module FormHelper
       def region_select(object_name, methods, options = {}, html_options = {})
         output = ''
 
-        preselected_choices = set_regions_options(options)
+        preselected_choices = setup_regions_options(options)
 
         html_options[:class] ?
-          (html_options[:class].prepend('region_select ')) :
+          html_options[:class].prepend('region_select ') :
             (html_options[:class] = 'region_select')
 
-        dropdown_prefix = options[:prefix] ? options[:prefix].to_s + "_" : ""
+        dropdown_prefix = options[:prefix] ? options[:prefix].to_s + '_' : ''
 
-        if Array === methods
+        if Array == methods
           methods.each_with_index do |method, index|
             if region_klass = method.to_s.classify.safe_constantize
-              choices = get_choices(region_klass, method, preselected_choices, index)
+              choices = fetch_choices(region_klass, method, preselected_choices, index)
               choices = prioritize_choices(options[:priority][method], choices) if options[:priority].try(:[], method)
 
               next_method = methods.at(index + 1)
@@ -28,28 +30,26 @@ module ChinaRegions
                 options[:selected] = options[:default][method] if options[:default][method]
               end
 
-              output << select(object_name, "#{dropdown_prefix}#{method.to_s}_id", choices, options, html_options)
+              output << select(object_name, "#{dropdown_prefix}#{method}_id", choices, options, html_options)
             else
               raise "Method '#{method}' is not a vaild attribute of #{object_name}"
             end
           end
         else
-          _methods = unless methods.to_s.include?('_id')
-            (methods.to_s + ('_id')).to_sym
-          else
-            _methods = methods
+          inner_methods = if methods.to_s.include?('_id')
+            inner_methods = methods
             methods = methods.to_s.gsub(/(_id)$/, '')
-            _methods
+            inner_methods
+          else
+            (methods.to_s + '_id').to_sym
           end
 
           if region_klass = methods.to_s.classify.safe_constantize
             options[:prompt] = region_prompt(region_klass)
 
-            if methods == :province && preselected_choices[:province_id]
-              options[:selected] = preselected_choices[:province_id]
-            end
+            options[:selected] = preselected_choices[:province_id] if methods == :province && preselected_choices[:province_id]
 
-            output << select(object_name, _methods, region_klass.where(nil).collect {|p| [ p.name, p.id ] }, options = options, html_options = html_options)
+            output << select(object_name, inner_methods, region_klass.where(nil).collect { |p| [p.name, p.id] }, options = options, html_options = html_options)
           else
             raise "Method '#{method}' is not a vaild attribute of #{object_name}"
           end
@@ -58,15 +58,11 @@ module ChinaRegions
       end
 
       private
-
-      def get_choices(region_klass, method, preselected_choices, index)
+      def fetch_choices(region_klass, method, preselected_choices, index)
         return preselected_choices[method] if preselected_choices[method]
+        return [] unless index.zero?
 
-        if index == 0
-          region_klass.where(nil).collect { |p| [p.name, p.id] }
-        else
-          []
-        end
+        region_klass.where(nil).collect { |p| [p.name, p.id] }
       end
 
       def prioritize_choices(priorities, choices)
@@ -90,27 +86,26 @@ module ChinaRegions
         priority_choices.compact + temp_choices
       end
 
-      def set_regions_options(options)
+      def setup_regions_options(options)
         return {} unless options[:default] && options[:default][:province]
 
-        #TODO: Add validator to check if the passed province, city or district exists within the models
-
+        # TODO: Add validator to check if the passed province, city or district exists within the models
         province_id = get_province_id(options[:default][:province])
         cities = City.where(province_id: province_id)
         districts = District.where(city_id: cities)
 
         {
           province_id: province_id,
-          city:        cities.collect { |c| [ c.name, c.id ] },
-          district:    districts.collect { |d| [ d.name, d.id ] }
+          city:        cities.collect { |c| [c.name, c.id] },
+          district:    districts.collect { |d| [d.name, d.id] }
         }
       end
 
       def set_prompt(method, options, region_klass)
-        if respond_to?("#{method}_select_prompt")
-          options[:prompt] = __send__("#{method}_select_prompt")
+        options[:prompt] = if respond_to?("#{method}_select_prompt")
+          __send__("#{method}_select_prompt")
         else
-          options[:prompt] = region_prompt(region_klass)
+          region_prompt(region_klass)
         end
       end
 
@@ -120,11 +115,11 @@ module ChinaRegions
       end
 
       def set_html_options(object_name, method, html_options, next_region, prefix)
-        html_options[:data] ? (html_options[:data][:region_klass] = "#{method.to_s}") : (html_options[:data] = { region_klass: "#{method.to_s}" })
+        html_options[:data] ? (html_options[:data][:region_klass] = method.to_s) : (html_options[:data] = { region_klass: method.to_s })
         if next_region
-          object_name = object_name.dup.gsub(/\[/, '_')
-          object_name = object_name.dup.gsub(/\]/, '')
-          html_options[:data].merge!(region_target: "#{object_name}_#{prefix}#{next_region.to_s}_id", region_target_klass: next_region.to_s)
+          object_name = object_name.dup.tr('[', '_')
+          object_name = object_name.dup.delete(']')
+          html_options[:data].merge!(region_target: "#{object_name}_#{prefix}#{next_region}_id", region_target_klass: next_region.to_s)
         else
           html_options[:data].delete(:region_target)
           html_options[:data].delete(:region_target_klass)
@@ -141,7 +136,6 @@ module ChinaRegions
         @template.region_select(@object_name.to_s, methods, options = options, html_options = html_options)
       end
     end
-
   end
 end
 

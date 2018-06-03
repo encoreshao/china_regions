@@ -1,7 +1,6 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 class City < ActiveRecord::Base
-
   belongs_to :province
   has_many :districts, dependent: :destroy
 
@@ -12,7 +11,6 @@ class City < ActiveRecord::Base
   end
 
   def siblings
-    @siblings ||= where(nil).with_province(self.province_id)
+    @siblings ||= where(nil).with_province(province_id)
   end
-
 end

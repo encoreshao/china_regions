@@ -1,7 +1,6 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
 class District < ActiveRecord::Base
-
   belongs_to :city
 
   scope :with_city, ->(city) { where(city_id: city) }
@@ -15,7 +14,6 @@ class District < ActiveRecord::Base
   end
 
   def siblings
-    @siblings ||= where(nil).with_city(self.city_id)
+    @siblings ||= where(nil).with_city(city_id)
   end
-
 end

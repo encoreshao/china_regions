@@ -1,7 +1,9 @@
-require "rails"
+# frozen_string_literal: true
+
+require 'rails'
 
 module ChinaRegions
-  if ::Rails.version > "3.1"
+  if ::Rails.version > '3.1'
     class Engine < ::Rails::Engine; end
   else
     class Railtie < ::Rails::Railtie
