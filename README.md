@@ -1,53 +1,62 @@
 # ChinaRegions
 
-中国省份，城市，地区［地级市］
-Ruby on Rails 程式代码, Ruby ( > 1.9.x ) And Rails (> 4.0)
+中国省份，城市，地区［地级市］Ruby on Rails 程式代码, Ruby (> 1.9.x) And Rails (> 4.0)
 
-## How to update
+## 如何更新数据文件
 
 If you are using ChinaRegions version 0.1.x be sure to run:
 
-    rails g china_regions:regions
+    >> rails g china_regions:regions
 
 to have the javascript file copied over into your project.
 
-## How to use it
+## 如何引入china_regions到你的项目
 
 添加以下代码到你的 Gemfile:
 
-gem 'china_regions'
+    gem 'china_regions'
 
 OR
 
-gem 'china_regions',  github: 'encoreshao/china_regions'
+    gem 'china_regions',  github: 'encoreshao/china_regions'
 
-bundle install
+安装:
 
-执行:
+    >> bundle install
 
-    rails g china_regions:install
+### 开始构建城市数据
+
+复制所需文件到你的项目中:
+
+    >> rails g china_regions:install
 
    随后你可以看到控制台发生的变化:
    * 复制 db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb 文件到db/migrate 目录
    * 复制 数据源 cities.yml 到 config 目录.  config/cities.yml
    * 复制 regions.en.yml 和 regions.zh.yml 文件到 config/locales 目录
-   * 执行 `rake db:migrate` 创建所需的表 (provinces, cities, districts).
-   * 执行 `rake china_regions:import` 导入数据.
+
+创建所需的表 (provinces, cities, districts):
+
+    >> rake db:migrate
+
+导入数据到对应表中:
+
+    >> rake china_regions:import
 
 
-此时 你可能需要添加三个 models[`Province`, `City`, `District`] 到你应用中:
+将所需的模型(Models) [`Province`, `City`, `District`] 到您的应用程式中:
 
     你可以执行 `rails g` 查看到 generator LIST.
 
-    执行 rails g china_regions:regions
+     >> rails g china_regions:regions
 
-   查看 app/models:
+查看 app/models:
 
     create  app/models/province.rb
     create  app/models/city.rb
     create  app/models/district.rb
 
-## How to view
+## 如何在View中使用
 
 范例:
 
@@ -76,7 +85,7 @@ bundle install
       = f.region_select [:province, :city, :district], :prefix => "work"
 
 
-Preselect Province:
+预选则省份:
 
     = form_for @article do |f|
 
@@ -86,7 +95,7 @@ Preselect Province:
 
       = f.region_select [:province, :city, :district], province: "重庆市"
 
-Prioritize Choice:
+优先选择:
 
     = form_for @article do |f|
 
