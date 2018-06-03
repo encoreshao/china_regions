@@ -21,7 +21,7 @@ module ChinaRegions
     end
 
     def copy_rake_tasks
-      copy_file '../../../../lib/tasks/china_regions.rake', 'lib/tasks/china_regions.rake' unless File.exist?('lib/tasks/china_regions.rake')
+      copy_file '../../../../lib/custom_tasks/china_regions.rake', 'lib/tasks/china_regions.rake' unless File.exist?('lib/tasks/china_regions.rake')
     end
 
     def self.next_migration_number(dirname)

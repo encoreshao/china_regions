@@ -21,7 +21,7 @@ namespace :china_regions do
       province = creating_province(province_name, province_hash)
 
       province_hash['cities'].each do |city_name, city_hash|
-        city = creating_city(province_id, city_name, city_hash)
+        city = creating_city(province.id, city_name, city_hash)
 
         creating_districts(city.id, city_hash)
       end
