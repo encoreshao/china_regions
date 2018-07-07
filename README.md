@@ -1,8 +1,12 @@
 # ChinaRegions
 
-中国省份，城市，地区［地级市］Ruby on Rails 程式代码, Ruby (> 1.9.x) And Rails (> 4.0)
+Chinese provinces, cities, regions [prefecture-level cities] Ruby on Rails code, Ruby (> 1.9.x) And Rails (> 4.0)
 
-## 如何更新数据文件
+[![Gem Version](https://badge.fury.io/rb/crunchbase-ruby-library.svg)](https://badge.fury.io/rb/crunchbase-ruby-library)
+[![Build Status](https://travis-ci.org/encoreshao/crunchbase-ruby-library.svg?branch=master)](https://travis-ci.org/encoreshao/crunchbase-ruby-library)
+[![Coverage Status](https://coveralls.io/repos/github/encoreshao/crunchbase-ruby-library/badge.svg)](https://coveralls.io/github/encoreshao/crunchbase-ruby-library)
+
+### How to update data
 
 If you are using ChinaRegions version 0.1.x be sure to run:
 
@@ -10,55 +14,49 @@ If you are using ChinaRegions version 0.1.x be sure to run:
 
 to have the javascript file copied over into your project.
 
-## 如何引入china_regions到你的项目
+### Installation
 
-添加以下代码到你的 Gemfile:
+Add it to your Gemfile:
 
     gem 'china_regions'
 
-OR
-
-    gem 'china_regions',  github: 'encoreshao/china_regions'
-
-安装:
+Run the following command to install it:
 
     >> bundle install
 
-### 开始构建城市数据
-
-复制所需文件到你的项目中:
+Run the generator:
 
     >> rails g china_regions:install
 
-   随后你可以看到控制台发生的变化:
-   * 复制 db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb 文件到db/migrate 目录
-   * 复制 数据源 cities.yml 到 config 目录.  config/cities.yml
-   * 复制 regions.en.yml 和 regions.zh.yml 文件到 config/locales 目录
+   Then you can see the changes that happened to the console:
+   * copy `db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb` to your project `db/migrate`
+   * copy datasource cities.yml 到 config 目录.  config/cities.yml
+   * copy regions.en.yml 和 regions.zh.yml 文件到 config/locales 目录
 
-创建所需的表 (provinces, cities, districts):
+Create tables (provinces, cities, districts):
 
     >> rake db:migrate
 
-导入数据到对应表中:
+Import data:
 
     >> rake china_regions:import
 
 
-将所需的模型(Models) [`Province`, `City`, `District`] 到您的应用程式中:
+Copy Models [`Province`, `City`, `District`] into your app:
 
     你可以执行 `rails g` 查看到 generator LIST.
 
      >> rails g china_regions:regions
 
-查看 app/models:
+Newly added models:
 
     create  app/models/province.rb
     create  app/models/city.rb
     create  app/models/district.rb
 
-## 如何在View中使用
+### Usage
 
-范例:
+Example:
 
     = form_for @article do |f|
 
@@ -77,7 +75,7 @@ OR
 
       = f.submit class: 'btn'
 
-添加前缀名:
+Add prefix name:
 
     = form_for @article do |f|
 
@@ -85,7 +83,7 @@ OR
       = f.region_select [:province, :city, :district], :prefix => "work"
 
 
-预选则省份:
+Pre-selected province:
 
     = form_for @article do |f|
 
@@ -95,20 +93,25 @@ OR
 
       = f.region_select [:province, :city, :district], province: "重庆市"
 
-优先选择:
+Prior choice:
 
     = form_for @article do |f|
 
       = f.region_select [:province, :city, :district], priority: { province: ["重庆市"], district: %w(巴南区 北碚区 渝北区) }
 
-## Contributing
+
+### Other languages
+
+[Chinese Readme](https://github.com/encoreshao/china_regions/blob/master/README.zh.md)
+
+### Contributing
 
 We have a list of valued contributors. Check them all at:
 
 https://github.com/encoreshao/china_regions/graphs/contributors
 
 
-## License
+### License
 
-ChinaRegions is released under the MIT license.
+Copyright © 2018-07 Encore Shao. See LICENSE for details.
 
