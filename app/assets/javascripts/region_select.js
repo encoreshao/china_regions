@@ -35,7 +35,8 @@ $(function() {
     $.getJSON('/china_regions/fetch_options', {
       klass: changed_object.data('region-target-klass'),
       parent_klass: changed_object.data('region-klass'),
-      parent_id: changed_object.val() }, function(data) {
+      parent_id: changed_object.val()
+    }, function(data) {
 
       $('option[value!=""]', target).remove();
       $.each(data, function(index, value) {

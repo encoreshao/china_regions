@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class District < ActiveRecord::Base
+class District < ApplicationRecord
   belongs_to :city
 
-  scope :with_city, ->(city) { where(city_id: city) }
+  scope :for_city, ->(city_id) { where(city_id: city_id) }
 
   def province
     city.province
@@ -14,6 +14,6 @@ class District < ActiveRecord::Base
   end
 
   def siblings
-    @siblings ||= where(nil).with_city(city_id)
+    @siblings ||= where(nil).for_city(city_id)
   end
 end
