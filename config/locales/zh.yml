@@ -18,7 +18,6 @@ zh:
         province: 省份
         name_en: 拼音
         name_abbr: 简称
-        zip_code: 邮编
         level: 等级
       district:
         name: 名称

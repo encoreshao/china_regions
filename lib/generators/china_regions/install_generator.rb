@@ -11,17 +11,11 @@ module ChinaRegions
       migration_template 'migration.rb', 'db/migrate/create_china_regions_tables.rb'
     end
 
-    def copy_cities
-      copy_file('cities.yml', 'config/cities.yml') unless File.exist?('config/cities.yml')
-    end
-
     def copy_locales
-      copy_file '../../../../config/locales/en.yml', 'config/locales/regions.en.yml' unless File.exist?('config/locales/regions.en.yml')
-      copy_file '../../../../config/locales/zh.yml', 'config/locales/regions.zh.yml' unless File.exist?('config/locales/regions.zh.yml')
-    end
-
-    def copy_rake_tasks
-      copy_file '../../../../lib/custom_tasks/china_regions.rake', 'lib/tasks/china_regions.rake' unless File.exist?('lib/tasks/china_regions.rake')
+      %w[en zh].each do |locale|
+        config_file = "config/locales/regions.#{locale}.yml"
+        copy_file "../../../../config/locales/#{locale}.yml", config_file unless File.exist?(config_file)
+      end
     end
 
     def self.next_migration_number(dirname)

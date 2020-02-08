@@ -1,4 +1,4 @@
-# ChinaRegions
+# 中国地区
 
 中国省份，城市，地区［地级市］Ruby on Rails 程式代码, Ruby (> 1.9.x) And Rails (> 4.0)
 
@@ -10,7 +10,7 @@
 
 复制所需文件到你的项目中:
 
-    >> rails g china_regions:regions
+    rails g china_regions:regions
 
 ### 如何引入china_regions到你的项目
 
@@ -20,39 +20,41 @@
 
 安装:
 
-    >> bundle install
+    bundle install
 
 #### 开始构建城市数据
 
 复制所需文件到你的项目中:
 
-    >> rails g china_regions:install
+    rails g china_regions:install
 
    随后你可以看到控制台发生的变化:
-   * 复制 db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb 文件到db/migrate 目录
-   * 复制 数据源 cities.yml 到 config 目录.  config/cities.yml
-   * 复制 regions.en.yml 和 regions.zh.yml 文件到 config/locales 目录
+   * 复制 `db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb` 文件到 `db/migrate` 目录中
+   * 复制 `regions.en.yml` 和 `regions.zh.yml` 配置文件到 `config/locales` 目录中
 
 创建所需的表 (provinces, cities, districts):
 
-    >> rake db:migrate
-
-导入数据到对应表中:
-
-    >> rake china_regions:import
-
+    rake db:migrate
 
 将所需的模型(Models) [`Province`, `City`, `District`] 到您的应用程式中:
 
-    你可以执行 `rails g` 查看到 generator LIST.
+  你可以执行 `rails g` 查看到 `generator` 列表.
 
-     >> rails g china_regions:regions
+    rails g china_regions:regions
 
 查看 app/models:
 
-    create  app/models/province.rb
-    create  app/models/city.rb
-    create  app/models/district.rb
+  - create  app/models/province.rb
+  - create  app/models/city.rb
+  - create  app/models/district.rb
+
+下载并导入最新数据到你的项目中:
+
+    rake china_regions:all
+
+  * 1. 从 `Administrative-divisions-of-China` 下载最新的地区信息到 `db/regions` 目录中.
+    - db/regions/pca-code.json
+  * 2. 将下载后的地区信息导入数据库中
 
 ### 如何在View中使用
 
@@ -102,7 +104,7 @@
 
 ### 其它语言
 
-[English Readme](https://github.com/encoreshao/china_regions/blob/master/README.md)
+[English](https://github.com/encoreshao/china_regions/blob/master/README.md)
 
 ### 贡献者
 
