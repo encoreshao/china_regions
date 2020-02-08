@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'china_regions'
+
+# If you use this, don't forget to add pry to your Gemfile!
+require 'pry'
+Pry.start

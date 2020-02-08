@@ -10,7 +10,7 @@ Chinese provinces, cities, regions [prefecture-level cities] Ruby on Rails code,
 
 If you are using ChinaRegions version 0.1.x be sure to run:
 
-    >> rails g china_regions:regions
+    rails g china_regions:regions
 
 to have the javascript file copied over into your project.
 
@@ -22,37 +22,39 @@ Add it to your Gemfile:
 
 Run the following command to install it:
 
-    >> bundle install
+    bundle install
 
 Run the generator:
 
-    >> rails g china_regions:install
+    rails g china_regions:install
 
    Then you can see the changes that happened to the console:
-   * copy `db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb` to your project `db/migrate`
-   * copy datasource cities.yml 到 config 目录.  config/cities.yml
-   * copy regions.en.yml 和 regions.zh.yml 文件到 config/locales 目录
+   * Copy `db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb` to `db/migrate` folder.
+   * Copy `regions.en.yml` and `regions.zh.yml` files to `config/locales` folders
 
 Create tables (provinces, cities, districts):
 
-    >> rake db:migrate
+    rake db:migrate
 
-Import data:
+Copy Models [Province`, `City`, `District] into your project:
 
-    >> rake china_regions:import
+  please run `rails g` see the generator list.
 
-
-Copy Models [`Province`, `City`, `District`] into your app:
-
-    你可以执行 `rails g` 查看到 generator LIST.
-
-     >> rails g china_regions:regions
+    rails g china_regions:regions
 
 Newly added models:
 
-    create  app/models/province.rb
-    create  app/models/city.rb
-    create  app/models/district.rb
+  - create  app/models/province.rb
+  - create  app/models/city.rb
+  - create  app/models/district.rb
+
+Download and import the latest regions to your project:
+
+    rake china_regions:all
+
+  * 1. Downloading regions from `Administrative-divisions-of-China` to `db/regions` folder.
+    - db/regions/pca-code.json
+  * 2. Import the regions into provinces and cities, districts
 
 ### Usage
 
@@ -102,7 +104,7 @@ Prior choice:
 
 ### Other languages
 
-[Chinese Readme](https://github.com/encoreshao/china_regions/blob/master/README.zh.md)
+[Chinese](https://github.com/encoreshao/china_regions/blob/master/README.zh.md)
 
 ### Contributing
 

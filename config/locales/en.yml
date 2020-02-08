@@ -18,7 +18,6 @@ en:
         province: Province
         name_en: English Name
         name_abbr: Short Name
-        zip_code: Zip
         level: Level
       district:
         name: Name

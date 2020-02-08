@@ -10,6 +10,7 @@ class CreateChinaRegionsTables < ActiveRecord::Migration
   def setup_provinces
     create_table :provinces do |t|
       t.string :name
+      t.integer :code
       t.string :name_en
       t.string :name_abbr
 
@@ -22,9 +23,9 @@ class CreateChinaRegionsTables < ActiveRecord::Migration
   def setup_citites
     create_table :cities do |t|
       t.string :name
+      t.integer :code
       t.integer :province_id
       t.integer :level
-      t.string :zip_code
       t.string :name_en
       t.string :name_abbr
 
@@ -32,17 +33,21 @@ class CreateChinaRegionsTables < ActiveRecord::Migration
     end
 
     add_index :cities, :name
+    add_index :cities, :province_id
   end
 
   def setup_districts
     create_table :districts do |t|
       t.string :name
       t.integer :city_id
+      t.integer :code
       t.string :name_en
       t.string :name_abbr
 
       t.timestamps
     end
+
     add_index :districts, :name
+    add_index :districts, :city_id
   end
 end
