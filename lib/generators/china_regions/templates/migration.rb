@@ -13,6 +13,7 @@ class CreateChinaRegionsTables < ActiveRecord::Migration
       t.integer :code
       t.string :name_en
       t.string :name_abbr
+      t.integer :cities_count, default: 0
 
       t.timestamps
     end
@@ -28,6 +29,7 @@ class CreateChinaRegionsTables < ActiveRecord::Migration
       t.integer :level
       t.string :name_en
       t.string :name_abbr
+      t.integer :districts_count, default: 0
 
       t.timestamps
     end
