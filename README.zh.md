@@ -1,8 +1,8 @@
 # ChinaRegions
 
-[![Gem Version](https://badge.fury.io/rb/china-regions.svg)](https://badge.fury.io/rb/china-regions)
-[![Build Status](https://travis-ci.org/encoreshao/china-regions.svg?branch=master)](https://travis-ci.org/encoreshao/china-regions)
-[![Coverage Status](https://coveralls.io/repos/github/encoreshao/china-regions/badge.svg)](https://coveralls.io/github/encoreshao/china-regions)
+[![Gem Version](https://badge.fury.io/rb/china_regions.svg)](https://badge.fury.io/rb/china_regions)
+[![Build Status](https://travis-ci.org/encoreshao/china_regions.svg?branch=master)](https://travis-ci.org/encoreshao/china_regions)
+[![Coverage Status](https://coveralls.io/repos/github/encoreshao/china_regions/badge.svg)](https://coveralls.io/github/encoreshao/china_regions)
 
 ChinaRegions 提供中国的省，市，区[地级市]的 Ruby on Rails的程式代码，代码版本要求 Ruby（> 1.9.x）和Rails（> 4.0).
 
@@ -140,7 +140,7 @@ rake china_regions:import
 
 ### 贡献者
 
-你可以在这里查看到所有的代码贡献者: https://github.com/encoreshao/china_regions/graphs/contributors
+  你可以在这里查看到所有的代码贡献者: https://github.com/encoreshao/china_regions/graphs/contributors
 
 ### 许可
 

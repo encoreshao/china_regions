@@ -1,8 +1,8 @@
 # ChinaRegions
 
-[![Gem Version](https://badge.fury.io/rb/crunchbase-ruby-library.svg)](https://badge.fury.io/rb/crunchbase-ruby-library)
-[![Build Status](https://travis-ci.org/encoreshao/crunchbase-ruby-library.svg?branch=master)](https://travis-ci.org/encoreshao/crunchbase-ruby-library)
-[![Coverage Status](https://coveralls.io/repos/github/encoreshao/crunchbase-ruby-library/badge.svg)](https://coveralls.io/github/encoreshao/crunchbase-ruby-library)
+[![Gem Version](https://badge.fury.io/rb/china_regions.svg)](https://badge.fury.io/rb/china_regions)
+[![Build Status](https://travis-ci.org/encoreshao/china_regions.svg?branch=master)](https://travis-ci.org/encoreshao/china_regions)
+[![Coverage Status](https://coveralls.io/repos/github/encoreshao/china_regions/badge.svg)](https://coveralls.io/github/encoreshao/china_regions)
 
 ChinaRegions provides Ruby on Rails code for provinces, cities, and districts [prefecture-level cities] in China. The code need to requires Ruby (> 1.9.x) and Rails (> 4.0).
 
@@ -78,9 +78,9 @@ rake china_regions:download
 rake china_regions:import
 ```
 
-- 1. Downloading regions from `Administrative-divisions-of-China` to `db/regions` folder.
+- Downloading regions from `Administrative-divisions-of-China` to `db/regions` folder.
   - db/regions/pca-code.json
-- 2. Import the regions into provinces and cities, districts
+- Import the regions into provinces and cities, districts
 
 ### Usage
 
@@ -136,7 +136,6 @@ Prior choice:
           }
 ```
 
-
 ### Other languages
 
 - [Chinese](https://github.com/encoreshao/china_regions/blob/master/README.zh.md)
@@ -144,7 +143,6 @@ Prior choice:
 ### Contributing
 
   We have a list of valued contributors. Check them all at: https://github.com/encoreshao/china_regions/graphs/contributors
-
 
 ### License
 
