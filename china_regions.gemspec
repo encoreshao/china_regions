@@ -6,7 +6,7 @@ require File.expand_path('lib/china_regions/version', __dir__)
 Gem::Specification.new do |gem|
   gem.authors       = ['Encore Shao']
   gem.email         = ['encore.shao@gmail.com']
-  gem.description   = 'China Regions is Ruby on rails interface'
+  gem.description   = 'China Regions is a Ruby on rails interface'
   gem.summary       = 'Rails 4+ version of dropdowns for all provinces, cities,
                        and districts in China.'
   gem.homepage      = 'http://github.com/encoreshao'
