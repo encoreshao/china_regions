@@ -10,18 +10,23 @@ en:
     attributes:
       province:
         name: Name
+        code: Code
         name_en: English Name
         name_abbr: Short Name
+        cities_count: Cities Count
       city:
-        name: Nam
+        name: Name
         province_id: Province
         province: Province
         name_en: English Name
         name_abbr: Short Name
         level: Level
+        code: Code
+        districts_count: Districts Count
       district:
         name: Name
         city_id: City
         city: City
         name_en: English Name
         name_abbr: Short Name
+        code: Code

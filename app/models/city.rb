@@ -10,7 +10,7 @@ class City < ApplicationRecord
 
   # Relationships
   belongs_to :province, counter_cache: true
-  delegate :name, to: :province
+  delegate :name, to: :province, prefix: true
 
   has_many :districts, dependent: :destroy
 

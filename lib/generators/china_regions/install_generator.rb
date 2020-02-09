@@ -14,7 +14,7 @@ module ChinaRegions
     def copy_locales
       %w[en zh].each do |locale|
         config_file = "config/locales/regions.#{locale}.yml"
-        copy_file "../../../../config/locales/#{locale}.yml", config_file unless File.exist?(config_file)
+        copy_file "../../../../config/locales/china_regions.#{locale}.yml", config_file unless File.exist?(config_file)
       end
     end
 

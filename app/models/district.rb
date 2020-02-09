@@ -9,17 +9,17 @@ class District < ApplicationRecord
 
   # Relationships
   belongs_to :city, counter_cache: true
-  delegate :name, to: :city
+  delegate :name, to: :city, prefix: true
 
   # Filters
   scope :for_city, ->(city_id) { where(city_id: city_id) }
 
-  def full_name
-    [province.name, city_name, name].compact.join(' - ')
-  end
-
   def province
     city.province
+  end
+
+  def full_name
+    [province.name, city_name, name].compact.join(' - ')
   end
 
   def short_name

@@ -10,8 +10,10 @@ zh:
     attributes:
       province:
         name: 名称
+        code: 编码
         name_en: 拼音
         name_abbr: 简称
+        cities_count: 城市数
       city:
         name: 名称
         province_id: 省份
@@ -19,9 +21,12 @@ zh:
         name_en: 拼音
         name_abbr: 简称
         level: 等级
+        code: 编码
+        districts_count: 地区数
       district:
         name: 名称
         city_id: 城市
         city: 城市
         name_en: 拼音
         name_abbr: 简称
+        code: 编码
