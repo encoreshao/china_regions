@@ -1,6 +1,8 @@
-# frozen_string_literal: true
+#!/usr/bin/env rake
 
-require 'rspec/core/rake_task'
+# require 'rspec/core/rake_task'
 
-RSpec::Core::RakeTask.new(:spec)
-task default: :spec
+# RSpec::Core::RakeTask.new(:spec)
+# task default: :spec
+
+require 'bundler/gem_tasks'
