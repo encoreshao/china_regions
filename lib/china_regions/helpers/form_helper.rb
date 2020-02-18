@@ -1,11 +1,10 @@
-
 # frozen_string_literal: true
 
 module ChinaRegions
   module Helpers
     module FormHelper
-      def region_select(object_name, methods, options = {}, html_options = {})
-        output = ''
+      def region_select(object_name, fields, options = {}, html_options = {})
+        output = []
 
         preselected_choices = setup_regions_options(options)
 
@@ -15,54 +14,56 @@ module ChinaRegions
 
         dropdown_prefix = options[:prefix] ? options[:prefix].to_s + '_' : ''
 
-        if Array == methods
-          methods.each_with_index do |method, index|
-            if region_klass = method.to_s.classify.safe_constantize
-              choices = fetch_choices(region_klass, method, preselected_choices, index)
-              choices = prioritize_choices(options[:priority][method], choices) if options[:priority].try(:[], method)
+        if fields.is_a?(Array)
+          fields.each_with_index do |field, field_index|
+            if region_klass = field.to_s.classify.safe_constantize
+              choices = fetch_choices(region_klass, field, preselected_choices, field_index)
+              choices = prioritize_choices(options[:priority][field], choices) if options[:priority].try(:[], field)
 
-              next_method = methods.at(index + 1)
+              next_method = fields.at(field_index + 1)
 
-              set_prompt(method, options, region_klass)
-              set_html_options(object_name, method, html_options, next_method, dropdown_prefix)
+              set_prompt(field, options, region_klass)
+              set_html_options(object_name, field, html_options, next_method, dropdown_prefix)
 
-              if options[:default] && options[:default][method]
-                options[:selected] = options[:default][method] if options[:default][method]
+              if options[:default] && options[:default][field]
+                options[:selected] = options[:default][field] if options[:default][field]
               end
 
-              output << select(object_name, "#{dropdown_prefix}#{method}_id", choices, options, html_options)
+              output << select(object_name, "#{dropdown_prefix}#{field}_id", choices, options, html_options)
             else
-              raise "Method '#{method}' is not a vaild attribute of #{object_name}"
+              raise "Method '#{field}' is not a vaild attribute of #{object_name}"
             end
           end
         else
-          inner_methods = if methods.to_s.include?('_id')
-            inner_methods = methods
-            methods = methods.to_s.gsub(/(_id)$/, '')
+          inner_methods = if fields.to_s.include?('_id')
+            inner_methods = fields
+            fields = fields.to_s.gsub(/(_id)$/, '')
             inner_methods
           else
-            (methods.to_s + '_id').to_sym
+            (fields.to_s + '_id').to_sym
           end
 
-          if region_klass = methods.to_s.classify.safe_constantize
+          if region_klass = fields.to_s.classify.safe_constantize
             options[:prompt] = region_prompt(region_klass)
+            options[:selected] = preselected_choices[:province_id] if fields == :province && preselected_choices[:province_id]
 
-            options[:selected] = preselected_choices[:province_id] if methods == :province && preselected_choices[:province_id]
-
-            output << select(object_name, inner_methods, region_klass.where(nil).collect { |p| [p.name, p.id] }, options = options, html_options = html_options)
+            output << select(object_name, inner_methods, region_options(region_klass), options: options, html_options: html_options)
           else
-            raise "Method '#{method}' is not a vaild attribute of #{object_name}"
+            raise "Method '#{fields}' is not a vaild attribute of #{object_name}"
           end
         end
-        output.html_safe
+        output.join.html_safe
       end
 
       private
       def fetch_choices(region_klass, method, preselected_choices, index)
         return preselected_choices[method] if preselected_choices[method]
-        return [] unless index.zero?
 
-        region_klass.where(nil).collect { |p| [p.name, p.id] }
+        index.zero? ? region_options(region_klass) : []
+      end
+
+      def region_options(region_klass)
+        @region_options ||= region_klass.where(nil).collect { |p| [p.name, p.id] }
       end
 
       def prioritize_choices(priorities, choices)
@@ -89,10 +90,10 @@ module ChinaRegions
       def setup_regions_options(options)
         return {} unless options[:default] && options[:default][:province]
 
-        # TODO: Add validator to check if the passed province, city or district exists within the models
+        # Add validator to check if the passed province, city or district exists within the models
         province_id = get_province_id(options[:default][:province])
-        cities = City.where(province_id: province_id)
-        districts = District.where(city_id: cities)
+        cities = City.for_province(province_id)
+        districts = District.for_city(city_id: cities)
 
         {
           province_id: province_id,
@@ -111,7 +112,8 @@ module ChinaRegions
 
       def get_province_id(province)
         return province if province.to_s =~ /\A[0-9]*\z/
-        Province.where('name_en = ? OR name = ?', province.downcase, province).first.id
+
+        Province.filter(province.downcase).first.id
       end
 
       def set_html_options(object_name, method, html_options, next_region, prefix)

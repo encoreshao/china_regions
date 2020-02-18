@@ -10,4 +10,7 @@ class Province < ApplicationRecord
   # Relationships
   has_many :cities, dependent: :destroy
   has_many :districts, through: :cities
+
+  # Filter by name
+  scope :filter, ->(fname) { where(["name_en = :name or name = :name", name: fname]) }
 end
