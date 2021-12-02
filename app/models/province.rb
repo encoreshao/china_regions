@@ -12,5 +12,5 @@ class Province < ApplicationRecord
   has_many :districts, through: :cities
 
   # Filter by name
-  scope :filter, ->(fname) { where(["name_en = :name or name = :name", name: fname]) }
+  scope :filter_by, ->(fname) { where(["name_en = :name or name = :name", name: fname]) }
 end
