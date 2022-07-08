@@ -4,6 +4,8 @@
 [![Build Status](https://travis-ci.org/encoreshao/china_regions.svg?branch=master)](https://travis-ci.org/encoreshao/china_regions)
 [![Coverage Status](https://coveralls.io/repos/github/encoreshao/china_regions/badge.svg)](https://coveralls.io/github/encoreshao/china_regions)
 
+[README](README.md) | [中文文档](README.zh.md)
+
 ChinaRegions 提供中国的省，市，区[地级市]的 Ruby on Rails的程式代码，代码版本要求 Ruby（> 1.9.x）和Rails（> 4.0).
 
 ### 数据来源
@@ -133,10 +135,6 @@ rake china_regions:import
             district: %w(巴南区 北碚区 渝北区)
           }
 ```
-
-### 其它语言
-
-[English](https://github.com/encoreshao/china_regions/blob/master/README.md)
 
 ### 贡献者
 

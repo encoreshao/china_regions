@@ -4,6 +4,8 @@
 [![Build Status](https://travis-ci.org/encoreshao/china_regions.svg?branch=master)](https://travis-ci.org/encoreshao/china_regions)
 [![Coverage Status](https://coveralls.io/repos/github/encoreshao/china_regions/badge.svg)](https://coveralls.io/github/encoreshao/china_regions)
 
+[README](README.md) | [中文文档](README.zh.md)
+
 ChinaRegions provides Ruby on Rails code for provinces, cities, and districts [prefecture-level cities] in China. The code need to requires Ruby (> 1.9.x) and Rails (> 4.0).
 
 ### Data Sources
@@ -135,10 +137,6 @@ Prior choice:
             district: %w(巴南区 北碚区 渝北区)
           }
 ```
-
-### Other languages
-
-- [Chinese](https://github.com/encoreshao/china_regions/blob/master/README.zh.md)
 
 ### Contributing
 
