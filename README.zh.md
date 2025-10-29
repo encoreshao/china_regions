@@ -114,7 +114,7 @@ rake china_regions:import
   = f.region_select [:province, :city, :district], :prefix => "work"
 ```
 
-预选则省份:
+预选择省份:
 
 ```
 = form_for @article do |f|
@@ -142,5 +142,5 @@ rake china_regions:import
 
 ### 许可
 
-Copyright © 2020-02 Encore Shao. See LICENSE for details.
+Copyright © 2020 Encore Shao. See LICENSE for details.
 

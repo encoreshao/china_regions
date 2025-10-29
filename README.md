@@ -6,7 +6,7 @@
 
 [README](README.md) | [中文文档](README.zh.md)
 
-ChinaRegions provides Ruby on Rails code for provinces, cities, and districts [prefecture-level cities] in China. The code need to requires Ruby (> 1.9.x) and Rails (> 4.0).
+ChinaRegions provides Ruby on Rails code for provinces, cities, and districts [prefecture-level cities] in China. The code requires Ruby (> 1.9.x) and Rails (> 4.0).
 
 ### Data Sources
 
@@ -144,5 +144,5 @@ Prior choice:
 
 ### License
 
-Copyright © 2020-02 Encore Shao. See LICENSE for details.
+Copyright © 2020 Encore Shao. See LICENSE for details.
 
