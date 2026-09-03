@@ -1,12 +1,12 @@
 # ChinaRegions
 
 [![Gem Version](https://badge.fury.io/rb/china_regions.svg)](https://badge.fury.io/rb/china_regions)
-[![Build Status](https://travis-ci.org/encoreshao/china_regions.svg?branch=master)](https://travis-ci.org/encoreshao/china_regions)
+[![CI](https://github.com/encoreshao/china_regions/actions/workflows/ci.yml/badge.svg)](https://github.com/encoreshao/china_regions/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/encoreshao/china_regions/badge.svg)](https://coveralls.io/github/encoreshao/china_regions)
 
 [README](README.md) | [中文文档](README.zh.md)
 
-ChinaRegions provides Ruby on Rails code for provinces, cities, and districts [prefecture-level cities] in China. The code requires Ruby (> 1.9.x) and Rails (> 4.0).
+ChinaRegions provides Ruby on Rails code for provinces, cities, and districts [prefecture-level cities] in China. The code requires Ruby >= 2.6 and Rails (> 4.0); it's tested against Ruby 2.6-3.4 and Rails 5.2-8.0, see the [CI matrix](.github/workflows/ci.yml).
 
 ### Data Sources
 

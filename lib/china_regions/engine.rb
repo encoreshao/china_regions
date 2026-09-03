@@ -8,7 +8,7 @@ module ChinaRegions
   else
     class Railtie < ::Rails::Railtie
       ActiveSupport.on_load(:action_view) do
-        ::ActionView::Base.send :include, ChinaRegions::Helpers::FormHelper
+        ::ActionView::Base.include ChinaRegions::Helpers::FormHelper
       end
     end
   end

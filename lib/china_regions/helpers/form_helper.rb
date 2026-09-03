@@ -25,9 +25,7 @@ module ChinaRegions
               set_prompt(field, options, region_klass)
               set_html_options(object_name, field, html_options, next_method, dropdown_prefix)
 
-              if options[:default] && options[:default][field]
-                options[:selected] = options[:default][field] if options[:default][field]
-              end
+              options[:selected] = field == :province ? preselected_choices[:province_id] : nil
 
               output << select(object_name, "#{dropdown_prefix}#{field}_id", choices, options, html_options)
             else
@@ -47,7 +45,7 @@ module ChinaRegions
             options[:prompt] = region_prompt(region_klass)
             options[:selected] = preselected_choices[:province_id] if fields == :province && preselected_choices[:province_id]
 
-            output << select(object_name, inner_methods, region_options(region_klass), options: options, html_options: html_options)
+            output << select(object_name, inner_methods, region_options(region_klass), options, html_options)
           else
             raise "Method '#{fields}' is not a vaild attribute of #{object_name}"
           end
@@ -93,7 +91,7 @@ module ChinaRegions
         # Add validator to check if the passed province, city or district exists within the models
         province_id = get_province_id(options[:default][:province])
         cities = City.for_province(province_id)
-        districts = District.for_city(city_id: cities)
+        districts = District.for_city(cities)
 
         {
           province_id: province_id,
@@ -113,7 +111,7 @@ module ChinaRegions
       def get_province_id(province)
         return province if province.to_s =~ /\A[0-9]*\z/
 
-        Province.filter(province.downcase).first.id
+        Province.filter_by(province.downcase).first.id
       end
 
       def set_html_options(object_name, method, html_options, next_region, prefix)
