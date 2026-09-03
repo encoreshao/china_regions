@@ -5,7 +5,12 @@
 .rvmrc
 
 Gemfile.lock
+gemfiles/*.lock
 
 pkg/*
 doc/
 coverage/
+
+spec/dummy/log/
+spec/dummy/tmp/
+spec/dummy/db/*.sqlite3

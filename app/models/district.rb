@@ -27,6 +27,6 @@ class District < ApplicationRecord
   end
 
   def siblings
-    @siblings ||= where(nil).for_city(city_id)
+    @siblings ||= self.class.for_city(city_id)
   end
 end

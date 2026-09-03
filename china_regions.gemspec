@@ -18,12 +18,18 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
   gem.version       = ChinaRegions::VERSION
+  gem.required_ruby_version = '>= 2.6'
 
   gem.add_dependency 'down'
   gem.add_dependency 'jquery-rails'
   gem.add_dependency 'ruby-pinyin'
+  gem.add_development_dependency 'appraisal'
+  gem.add_development_dependency 'combustion'
   gem.add_development_dependency 'coveralls'
   gem.add_development_dependency 'pry'
+  gem.add_development_dependency 'rails'
   gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'rspec-rails'
   gem.add_development_dependency 'rubocop'
+  gem.add_development_dependency 'sqlite3'
 end

@@ -1,10 +1,30 @@
 # frozen_string_literal: true
 
+# Older Rails' ActiveSupport::LoggerThreadSafeLevel references the bare
+# `Logger` constant without requiring it; newer Ruby/RubyGems no longer
+# load it implicitly, so it must be required before ActiveSupport does.
+require 'logger'
+
 require 'coveralls'
 Coveralls.wear!
 
+ENV['RAILS_ENV'] ||= 'test'
+
+require 'combustion'
+Combustion.path = 'spec/dummy'
+Combustion.initialize! :active_record, :action_controller, :action_view
+
+# Combustion's `to_prepare` hook (which loads db/schema.rb) doesn't reliably
+# fire during boot on every Rails version we test against, so load it directly.
+load Rails.root.join('db', 'schema.rb') if ActiveRecord::Base.connection.tables.empty?
+
+require 'rspec/rails'
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.use_transactional_fixtures = true
+  config.infer_spec_type_from_file_location!
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

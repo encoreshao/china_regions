@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  rspec:
+    name: Ruby ${{ matrix.ruby }} / Rails ${{ matrix.rails }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ruby: '2.6'
+            rails: '5.2'
+          - ruby: '2.7'
+            rails: '6.1'
+          - ruby: '2.7'
+            rails: '7.0'
+          - ruby: '3.0'
+            rails: '6.1'
+          - ruby: '3.1'
+            rails: '7.0'
+          - ruby: '3.1'
+            rails: '7.1'
+          - ruby: '3.2'
+            rails: '7.1'
+          - ruby: '3.3'
+            rails: '7.2'
+    env:
+      BUNDLE_GEMFILE: gemfiles/rails_${{ matrix.rails }}.gemfile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - name: Run rspec
+        run: bundle exec rspec
+
+  rubocop:
+    name: Rubocop
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Run rubocop
+        run: bundle exec rubocop --no-server

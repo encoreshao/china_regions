@@ -26,6 +26,6 @@ class City < ApplicationRecord
   end
 
   def siblings
-    @siblings ||= where(nil).for_province(province_id)
+    @siblings ||= self.class.for_province(province_id)
   end
 end
