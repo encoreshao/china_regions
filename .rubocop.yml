@@ -15,6 +15,7 @@ AllCops:
     - 'tmp/**/*'
     - 'gemfiles/**/*'
     - 'spec/dummy/**/*'
+    - 'vendor/**/*'
     - 'lib/china_regions/helpers/form_helper.rb'
 
 Style/StringLiterals:

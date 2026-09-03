@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 require File.expand_path('lib/china_regions/version', __dir__)
