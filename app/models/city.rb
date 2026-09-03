@@ -14,7 +14,7 @@ class City < ApplicationRecord
 
   has_many :districts, dependent: :destroy
 
-  # Fileters
+  # Filters
   scope :for_province, ->(province_id) { where(province_id: province_id) }
 
   def full_name

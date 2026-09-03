@@ -26,15 +26,8 @@ module ChinaRegions
       end
     end
 
-    def add_rails_version_for_migration
-      rails_version = Gem.loaded_specs["activesupport"].version
-      return if rails_version < Gem::Version.create('4.0')
-
-      migration_version = rails_version.to_s.split(/\./)[0..1].join('.')
-      filename  = 'db/migrate/*create_china_regions_tables.rb'
-      kclass    = 'ActiveRecord::Migration'
-
-      system(`grep -rl "#{kclass}$" #{filename} | xargs sed -i "" "s/#{kclass}/#{kclass}[#{migration_version}]/g"`)
+    def migration_version
+      "#{ActiveRecord::VERSION::MAJOR}.#{ActiveRecord::VERSION::MINOR}"
     end
   end
 end

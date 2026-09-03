@@ -43,6 +43,15 @@ RSpec.describe ChinaRegions::Helpers::FormHelper, type: :helper do
 
       expect(output).to include('class="region_select"')
     end
+
+    it 'does not reuse a cached option list across different region classes' do
+      province_output = helper.region_select('article', :province)
+      city_output = helper.region_select('article', :city)
+
+      expect(province_output).to include('重庆市')
+      expect(city_output).to include('渝中区')
+      expect(city_output).not_to include('四川省')
+    end
   end
 
   describe 'array-of-fields usage' do

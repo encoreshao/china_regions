@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateChinaRegionsTables < ActiveRecord::Migration
+class CreateChinaRegionsTables < ActiveRecord::Migration[<%= migration_version %>]
   def change
     setup_provinces unless table_exists? 'provinces'
     setup_citites   unless table_exists? 'cities'
