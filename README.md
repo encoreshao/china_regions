@@ -6,100 +6,101 @@
 
 [README](README.md) | [中文文档](README.zh.md)
 
-ChinaRegions provides Ruby on Rails code for provinces, cities, and districts [prefecture-level cities] in China. The code requires Ruby >= 2.6 and Rails (> 4.0); it's tested against Ruby 2.6-3.4 and Rails 5.2-8.0, see the [CI matrix](.github/workflows/ci.yml).
+ChinaRegions is a Rails engine that provides cascading province / city / district [prefecture-level city] dropdowns for China, backed by the official administrative division data.
 
-### Data Sources
+## Table of Contents
 
-*   Ministry of Civil Affairs, National Bureau of Statistics:
-    * [State Statistics Bureau of the People's Republic of China-Statistical Divisions and Urban-Rural Division Codes](http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/)
-    * [State Statistics Bureau of the People's Republic of China-Statistical Division Codes and Urban-rural Division Codes Compilation Rules](http://www.stats.gov.cn/tjsj/tjbz/200911/t20091125_8667.html)
-*   This item has been updated to:
-    * [2018 zoning code and urban-rural division code for statistics (cut-off time: 2018-10-31, release time: 2019-01-31)](http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/index.html)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Basic select](#basic-select)
+  - [Prefix](#prefix)
+  - [Pre-selected province](#pre-selected-province)
+  - [Priority ordering](#priority-ordering)
+  - [Cascading updates (AJAX)](#cascading-updates-ajax)
+- [Updating Region Data](#updating-region-data)
+- [Data Sources](#data-sources)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [License](#license)
 
-### How to update data
+## Features
 
-If you are using ChinaRegions version 0.1.x be sure to run:
+- `region_select` form helper for `form_for`/`form_with`, usable as a single select or an array of cascading selects (`[:province, :city, :district]`).
+- Cascading selects update automatically in the browser via `region_select.js`, which calls the engine's `/china_regions/fetch_options` JSON endpoint.
+- Supports a field name prefix (for repeated selects on one form), a default pre-selected province, and custom priority ordering of choices.
+- Ships `Province`, `City`, and `District` models plus a migration, generators, and rake tasks to download and import the latest official region data.
 
-```
-rails g china_regions:regions
-```
+## Requirements
 
-to have the javascript file copied over into your project.
+- Ruby >= 2.6
+- Rails (> 4.0)
 
-### Installation
+Tested against Ruby 2.6-3.4 and Rails 5.2-8.0; see the [CI matrix](.github/workflows/ci.yml).
+
+## Installation
 
 Add it to your Gemfile:
 
-```
+```ruby
 gem 'china_regions'
 ```
 
-Run the following command to install it:
+Install it:
 
-```
+```sh
 bundle install
 ```
 
 Run the generator:
 
-```
+```sh
 rails g china_regions:install
 ```
 
-Then you can see the changes that happened to the console:
+This copies:
 
-  - Copy `db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb` to `db/migrate` folder.
-  - Copy `regions.en.yml` and `regions.zh.yml` files to `config/locales` folders
+- `db/migrate/xxxxxxxxxxx_create_china_regions_tables.rb` into `db/migrate`
+- `regions.en.yml` and `regions.zh.yml` into `config/locales`
 
-Create tables (provinces, cities, districts):
+Create the tables (`provinces`, `cities`, `districts`):
 
+```sh
+rails db:migrate
 ```
-rake db:migrate
-```
 
-Copy Models [`Province`, `City`, `District`] into your project:
+Copy the `Province`, `City`, and `District` models into your app:
 
-```
+```sh
 rails g china_regions:regions
 ```
 
-Newly added models:
+This adds:
 
-- create  app/models/province.rb
-- create  app/models/city.rb
-- create  app/models/district.rb
+- `app/models/province.rb`
+- `app/models/city.rb`
+- `app/models/district.rb`
+- `app/assets/javascripts/region_select.js`
 
-Download and import the latest regions to your project:
+Make sure `region_select.js` (and jQuery, provided via the `jquery-rails` dependency) is loaded by your asset pipeline so cascading selects update in the browser — e.g. add `//= require region_select` to your `application.js` manifest.
 
-```
-rake china_regions:all
+Finally, download and import the latest region data (see [Updating Region Data](#updating-region-data)).
 
-OR
+## Usage
 
-rake china_regions:download
-rake china_regions:import
-```
+### Basic select
 
-- Downloading regions from `Administrative-divisions-of-China` to `db/regions` folder.
-  - db/regions/pca-code.json
-- Import the regions into provinces and cities, districts
-
-### Usage
-
-Example:
-
-```
+```slim
 = form_for @article do |f|
-
   = f.region_select [:province, :city, :district]
 
-  # form_tag
+  / or, with form_tag-style helpers
   = region_select :article, :province_id
   = region_select :article, :city_id
   = region_select :article, :district_id
 
-  OR
-
+  / or, passing the bare field name
   = region_select :article, :province
   = region_select :article, :city
   = region_select :article, :district
@@ -107,29 +108,33 @@ Example:
   = f.submit class: 'btn'
 ```
 
-Add prefix name:
+### Prefix
 
-```
+Add a prefix so the same fields can appear more than once on a form (e.g. a "home" and "work" address):
+
+```slim
 = form_for @article do |f|
-
-  = f.region_select [:province, :city, :district], :prefix => "home"
-  = f.region_select [:province, :city, :district], :prefix => "work"
+  = f.region_select [:province, :city, :district], prefix: "home"
+  = f.region_select [:province, :city, :district], prefix: "work"
 ```
 
-Pre-selected province:
+### Pre-selected province
 
-```
+Preselect a province (by English or Chinese name, or by id) and prefill its cities and districts:
+
+```slim
 = form_for @article do |f|
-  = f.region_select [:province, :city, :district], province: "chongqing"
+  = f.region_select [:province, :city, :district], default: { province: "chongqing" }
 
-  OR
-
-  = f.region_select [:province, :city, :district], province: "重庆市"
+  / or
+  = f.region_select [:province, :city, :district], default: { province: "重庆市" }
 ```
 
-Prior choice:
+### Priority ordering
 
-```
+Move specific choices to the front of a select's option list:
+
+```slim
 = form_for @article do |f|
   = f.region_select [:province, :city, :district],
           priority: {
@@ -138,11 +143,50 @@ Prior choice:
           }
 ```
 
-### Contributing
+### Cascading updates (AJAX)
 
-  We have a list of valued contributors. Check them all at: https://github.com/encoreshao/china_regions/graphs/contributors
+Each rendered select carries `data-region-klass` and `data-region-target` attributes. `region_select.js` listens for `change` events on `.region_select` elements and fetches the next select's options from `ChinaRegions::FetchOptionsController` (mounted at `/china_regions/fetch_options`), so picking a province repopulates the city select, and picking a city repopulates the district select — no extra setup required beyond loading the JS asset.
 
-### License
+## Updating Region Data
 
-Copyright © 2020 Encore Shao. See LICENSE for details.
+Download and import the latest official region data:
 
+```sh
+rails china_regions:all
+
+# or, as two separate steps
+rails china_regions:download
+rails china_regions:import
+```
+
+- `china_regions:download` fetches the latest data from `Administrative-divisions-of-China` into `db/regions/pca-code.json`.
+- `china_regions:import` imports that file into the `provinces`, `cities`, and `districts` tables.
+
+## Data Sources
+
+- Ministry of Civil Affairs, National Bureau of Statistics:
+  - [State Statistics Bureau of the People's Republic of China — Statistical Divisions and Urban-Rural Division Codes](http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/)
+  - [State Statistics Bureau of the People's Republic of China — Statistical Division Codes and Urban-Rural Division Codes Compilation Rules](http://www.stats.gov.cn/tjsj/tjbz/200911/t20091125_8667.html)
+- Currently updated to the [2018 zoning and urban-rural division codes (cut-off 2018-10-31, released 2019-01-31)](http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/index.html).
+
+## Testing
+
+```sh
+bundle exec rspec
+bundle exec rubocop
+```
+
+The gem is also verified against every supported Rails version via [Appraisal](Appraisals):
+
+```sh
+bundle exec appraisal install
+bundle exec appraisal rspec
+```
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/encoreshao/china_regions. See the full list of contributors at https://github.com/encoreshao/china_regions/graphs/contributors.
+
+## License
+
+Copyright © 2020-2026 Encore Shao. See [LICENSE](LICENSE) for details.
